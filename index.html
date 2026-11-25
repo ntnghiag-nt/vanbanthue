@@ -1313,7 +1313,7 @@
         <p><strong class="text-slate-800">1. Tìm kiếm thông minh không dấu:</strong> Gõ số hiệu (vd: <code>181</code>, <code>125</code>, <code>132/2026</code>) hoặc từ khóa tiếng Việt không dấu vào thanh tìm kiếm để lọc tức thì.</p>
         <p><strong class="text-slate-800">2. Thư viện văn bản &amp; So sánh:</strong> Lọc theo 12 lĩnh vực thuế, trạng thái hiệu lực, xuất CSV/Excel hoặc bấm <strong>So sánh 2 văn bản</strong> để đối chiếu điểm mới.</p>
         <p><strong class="text-slate-800">3. Biểu mẫu tải về &amp; Trao đổi nội bộ:</strong> Tải trực tiếp biểu mẫu Excel/Word/PDF về máy và thảo luận nghiệp vụ cùng đồng nghiệp.</p>
-        <p><strong class="text-slate-800">4. Quản trị dữ liệu:</strong> Bấm nút <strong>Quản trị</strong> trên thanh công cụ (mật khẩu mặc định: <code>nghi2026</code>) để đăng file tải về, thêm văn bản mới, đăng tin mới hoặc xem nhật ký giám sát.</p>
+        <p><strong class="text-slate-800">4. Quản trị dữ liệu:</strong> Bấm nút <strong>Quản trị</strong> trên thanh công cụ (mật khẩu mặc định: <code>Tct@2099</code>) để đăng file tải về, thêm văn bản mới, đăng tin mới hoặc xem nhật ký giám sát.</p>
       </div>
       <div class="pt-3 border-t border-slate-100 flex justify-end">
         <button onclick="closeGuideModal()" class="bg-[#1D4ED8] hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Đã hiểu</button>
@@ -1369,7 +1369,7 @@
         <form onsubmit="handleAdminLogin(event)" class="space-y-3 max-w-sm mx-auto py-2">
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">Mật khẩu quản trị</label>
-            <input id="adminPasswordInput" type="password" placeholder="Nhập mật khẩu (mặc định: nghi2026)..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-[13.5px] focus:bg-white focus:border-blue-500 focus:outline-none" required />
+            <input id="adminPasswordInput" type="password" placeholder="Nhập mật khẩu quản trị..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-[13.5px] focus:bg-white focus:border-blue-500 focus:outline-none" required />
             <p id="adminLoginError" class="hidden text-xs text-red-600 font-semibold mt-1">Mật khẩu chưa chính xác, vui lòng thử lại!</p>
           </div>
           <button type="submit" class="w-full py-2.5 bg-[#1D4ED8] hover:bg-blue-700 text-white font-bold text-[13.5px] rounded-xl shadow-sm transition cursor-pointer">
@@ -1698,7 +1698,51 @@
             </div>
           </div>
 
-          <div id="adminTab-firebase" class="admin-tab-pane hidden space-y-4">
+          <div id="adminTab-password" class="admin-tab-pane hidden space-y-4">
+            <form onsubmit="handleAdminChangePassword(event)" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3 max-w-md">
+              <h4 class="font-bold text-slate-800 text-[14px]">Đổi mật khẩu Quản trị viên</h4>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Mật khẩu hiện tại *</label>
+                <input id="admOldPass" type="password" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Mật khẩu mới (tối thiểu 6 ký tự) *</label>
+                <input id="admNewPass" type="password" minlength="6" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="bg-[#15803D] hover:bg-[#166534] text-white font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
+                  Cập nhật mật khẩu
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-20 right-4 z-50 hidden items-center gap-2 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-xl shadow-xl animate-fadeIn">
+    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+    <span id="toastMessage">Đã cập nhật thành công!</span>
+  </div>
+
+  <script>
+    const TAX_DOMAINS_CONFIG = [
+      { id: 'ALL', label: 'Tất cả lĩnh vực' },
+      { id: 'GTGT', label: 'Thuế GTGT' },
+      { id: 'TNDN', label: 'Thuế TNDN' },
+      { id: 'TNCN', label: 'Thuế TNCN' },
+      { id: 'HKD', label: 'Hộ, cá nhân kinh doanh' },
+      { id: 'QLT', label: 'Quản lý thuế' },
+      { id: 'HOADON', label: 'Hóa đơn, chứng từ' },
+      { id: 'KETOAN', label: 'Kế toán & chế độ kế toán' },
+      { id: 'XUPHAT', label: 'Xử phạt vi phạm' },
+      { id: 'GDLK', label: 'Giao dịch liên kết' },
+      { id: 'GIAMGIAHAN', label: 'Giảm, gia hạn thuế 2026' },
+      { id: 'PHILEPHI', label: 'Phí, lệ phí, thuế khác' },
+      { id: 'DOANHNGHIEP', label: 'Doanh nghiệp' }
+    ];
 
     const BASE_DOCUMENTS = [
       { code: '108/2025/QH15', docType: 'Luật', title: 'Luật Quản lý thuế năm 2025 (Hiệu lực từ 01/07/2026)', domains: ['QLT', 'HKD', 'HOADON'], domainLabel: 'Quản lý thuế', issuer: 'Quốc hội', issuedYear: 2025, effective: '01/07/2026', status: 'active', summary: 'Thay thế Luật Quản lý thuế 2019 từ 01/07/2026; quy định mới về khai thuế, tính thuế, sử dụng hóa đơn điện tử của hộ kinh doanh, cá nhân kinh doanh (Điều 13, Điều 26), quản lý rủi ro và tuân thủ thuế.' },
@@ -1829,12 +1873,11 @@
         date: '25/11/2026',
         uploader: 'Nguyễn Thanh Nghị - TCS5',
         mode: 'local',
-        dataUrl: 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(
-          'Điều khoản,Hành vi vi phạm,Khung phạt tiền,Mức phạt trung bình (Tổ chức),Mức phạt trung bình (Cá nhân/HKD)\n' +
-          'Điều 10 NĐ 125,Chậm nộp hồ sơ đăng ký thuế,Cảnh cáo hoặc 1tr - 10tr,3.500.000 đ,1.750.000 đ\n' +
-          'Điều 13 NĐ 125,Chậm nộp hồ sơ khai thuế quá hạn,Cảnh cáo hoặc 2tr - 25tr,6.500.000 đ (31-60 ngày),3.250.000 đ (31-60 ngày)\n' +
-          'Điều 16 NĐ 125,Khai sai dẫn đến thiếu số thuế phải nộp,Phạt 20% số thuế thiếu,20% + Tiền chậm nộp 0.03%/ngày,20% + Tiền chậm nộp 0.03%/ngày\n' +
-          'Điều 24 NĐ 125 & 310,Lập hóa đơn không đúng thời điểm,Cảnh cáo hoặc 500k - 20tr,4.000.000 đ,2.000.000 đ\n'
+        dataUrl: 'data:text/csv;charset=utf-8,' + encodeURIComponent(
+          'Hành vi vi phạm,Khung phạt tham khảo,Ghi chú\n' +
+          'Chậm nộp hồ sơ khai thuế quá hạn,Cảnh cáo hoặc 2.000.000đ - 25.000.000đ,Tùy số ngày chậm nộp & tình tiết giảm nhẹ\n' +
+          'Khai sai dẫn đến thiếu thuế,Phạt 20% số tiền thuế thiếu,Kèm tiền chậm nộp 0.03%/ngày\n' +
+          'Lập hóa đơn không đúng thời điểm,Cảnh cáo hoặc 500.000đ - 20.000.000đ,Áp dụng theo NĐ 125/2020/NĐ-CP & NĐ 310/2025/NĐ-CP'
         ),
         isSample: true
       }
@@ -2866,6 +2909,7 @@
     }
 
     const DEFAULT_FIREBASE_DB_URL = 'https://vanbanthue-tcs5-default-rtdb.asia-southeast1.firebasedatabase.app';
+    const DEFAULT_ADMIN_PASSWORD = 'Tct@2099';
     const LOCAL_ADMIN_PASS_KEY = 'udnt_admin_password_v1';
     const LOCAL_ADMIN_DOCS_KEY = 'udnt_custom_docs_v1';
     const LOCAL_ADMIN_NEWS_KEY = 'udnt_custom_news_v1';
@@ -2890,7 +2934,9 @@
     let adminAuditLogs = [];
 
     function getAdminPassword() {
-      return localStorage.getItem(LOCAL_ADMIN_PASS_KEY) || 'nghi2026';
+      const savedPass = localStorage.getItem(LOCAL_ADMIN_PASS_KEY);
+      if (savedPass && savedPass !== 'nghi2026') return savedPass;
+      return DEFAULT_ADMIN_PASSWORD;
     }
 
     function openAdminModal(defaultTab = 'files') {
@@ -3036,6 +3082,25 @@
       pushCollectionToFirebase('chat_access', chatAccessConfig);
       showToast(enabled ? `Đã bật mã phòng chat nội bộ (${pinCode})` : 'Đã mở phòng chat tự do cho mọi người mở link');
     }
+
+    function handleAdminChangePassword(e) {
+      e.preventDefault();
+      if (!isAdminLoggedIn) return;
+      const oldPass = (document.getElementById('admOldPass')?.value || '').trim();
+      const newPass = (document.getElementById('admNewPass')?.value || '').trim();
+      if (oldPass !== getAdminPassword()) {
+        showToast('Mật khẩu hiện tại chưa đúng!');
+        return;
+      }
+      if (newPass.length < 6) {
+        showToast('Mật khẩu mới cần ít nhất 6 ký tự!');
+        return;
+      }
+      try {
+        localStorage.setItem(LOCAL_ADMIN_PASS_KEY, newPass);
+      } catch (err) {}
+      e.target.reset();
+      showToast('Đã đổi mật khẩu Quản trị viên thành công!');
     }
 
     let pendingLocalFileData = null;
@@ -3414,23 +3479,6 @@
     }
 
     let firebaseEventSource = null;
-
-    function updateSyncIndicators(connected) {
-      const badge1 = document.getElementById('syncStatusBadge');
-      const badge2 = document.getElementById('adminFirebaseBadge');
-      if (badge1) {
-        badge1.textContent = connected ? 'Firebase Live' : 'Lưu cục bộ';
-        badge1.className = connected
-          ? 'text-[10.5px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full'
-          : 'text-[10.5px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full';
-      }
-      if (badge2) {
-        badge2.textContent = connected ? 'Đã kết nối Firebase' : 'Chưa kết nối';
-        badge2.className = connected
-          ? 'text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full'
-          : 'text-[11px] font-bold bg-slate-200 text-slate-700 px-2.5 py-0.5 rounded-full';
-      }
-    }
 
     function applyFirebaseRootData(data) {
       if (!data) return;
