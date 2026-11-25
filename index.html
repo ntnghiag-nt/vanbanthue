@@ -3727,12 +3727,8 @@
       e.preventDefault();
       if (chatAccessConfig.pinEnabled && chatAccessConfig.pinCode) {
         if (verifiedRoomPinSession !== chatAccessConfig.pinCode) {
-          const enteredPin = window.prompt('Phòng chat nội bộ đang bật mã truy cập. Vui lòng nhập mã phòng chat:');
-          if ((enteredPin || '').trim() !== chatAccessConfig.pinCode) {
-            showToast('Mã phòng chat chưa đúng, không thể gửi tin nhắn!');
-            return;
-          }
-          verifiedRoomPinSession = chatAccessConfig.pinCode;
+          showToast('Phòng chat đang bật mã khóa. Vui lòng tắt mã khóa trong mục Quản trị để gửi nhanh.');
+          return;
         }
       }
       const inputEl = document.getElementById(source === 'main' ? 'mainChatInput' : 'miniChatInput');
@@ -3782,26 +3778,28 @@
     const VIETNAMESE_DAYS = ['Chủ nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
 
     function updateRealtimeClock() {
-      const now = new Date();
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      const ss = String(now.getSeconds()).padStart(2, '0');
-      const dayName = VIETNAMESE_DAYS[now.getDay()];
-      const dd = String(now.getDate()).padStart(2, '0');
-      const mo = String(now.getMonth() + 1).padStart(2, '0');
-      const yyyy = now.getFullYear();
+      try {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        const dayName = VIETNAMESE_DAYS[now.getDay()] || 'Thứ Tư';
+        const dd = String(now.getDate()).padStart(2, '0');
+        const mo = String(now.getMonth() + 1).padStart(2, '0');
+        const yyyy = now.getFullYear();
 
-      const timeEl = document.getElementById('liveClockTime');
-      const dateEl = document.getElementById('liveClockDate');
-      if (timeEl) timeEl.textContent = `${hh}:${mm}:${ss}`;
-      if (dateEl) dateEl.textContent = `${dayName}, ${dd}/${mo}/${yyyy}`;
+        const timeEl = document.getElementById('liveClockTime');
+        const dateEl = document.getElementById('liveClockDate');
+        if (timeEl) timeEl.textContent = `${hh}:${mm}:${ss}`;
+        if (dateEl) dateEl.textContent = `${dayName}, ${dd}/${mo}/${yyyy}`;
 
-      const cardDay = document.getElementById('currentDayName');
-      const cardDate = document.getElementById('currentDateBig');
-      const cardYear = document.getElementById('currentYearText');
-      if (cardDay) cardDay.textContent = dayName;
-      if (cardDate) cardDate.textContent = `${dd}/${mo}`;
-      if (cardYear) cardYear.textContent = String(yyyy);
+        const cardDay = document.getElementById('currentDayName');
+        const cardDate = document.getElementById('currentDateBig');
+        const cardYear = document.getElementById('currentYearText');
+        if (cardDay) cardDay.textContent = dayName;
+        if (cardDate) cardDate.textContent = `${dd}/${mo}`;
+        if (cardYear) cardYear.textContent = String(yyyy);
+      } catch (e) {}
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -3842,31 +3840,33 @@
         chatOfficials = [...DEFAULT_CHAT_OFFICIALS];
       }
 
-      populateOfficialDropdown();
-      loadSavedIdentity();
-      const nameInp = document.getElementById('chatUserNameInput');
-      if (nameInp) nameInp.addEventListener('input', () => renderChatMessages());
-      window.addEventListener('storage', (ev) => {
-        if (ev.key === LOCAL_CHAT_KEY && ev.newValue) {
-          try {
-            const parsed = JSON.parse(ev.newValue);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              chatMessages = parsed;
-              renderChatMessages();
-            }
-          } catch (e) {}
-        }
-      });
-      initVisitorStatistics();
-      refreshDashboardStats();
-      renderLibraryTable();
-      renderSharedFilesList();
-      renderPenaltiesList();
-      renderNewsFeed();
-      renderChatMessages();
-      calculateLateFee();
-      handleHashChange();
-      if (firebaseDbUrl) startFirebasePolling();
+      try {
+        populateOfficialDropdown();
+        loadSavedIdentity();
+        const nameInp = document.getElementById('chatUserNameInput');
+        if (nameInp) nameInp.addEventListener('input', () => renderChatMessages());
+        window.addEventListener('storage', (ev) => {
+          if (ev.key === LOCAL_CHAT_KEY && ev.newValue) {
+            try {
+              const parsed = JSON.parse(ev.newValue);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                chatMessages = parsed;
+                renderChatMessages();
+              }
+            } catch (e) {}
+          }
+        });
+        initVisitorStatistics();
+        refreshDashboardStats();
+        renderLibraryTable();
+        renderSharedFilesList();
+        renderPenaltiesList();
+        renderNewsFeed();
+        renderChatMessages();
+        calculateLateFee();
+        handleHashChange();
+        if (firebaseDbUrl) startFirebasePolling();
+      } catch (err) {}
     });
   </script>
 </body>
