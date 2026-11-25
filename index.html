@@ -1,0 +1,2682 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ỨNG DỤNG NGÀNH THUẾ - Tra cứu văn bản thuế mới nhất</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='58' fill='%23FACC15' stroke='%23B45309' stroke-width='2'/%3E%3Ccircle cx='60' cy='60' r='47' fill='%23DC2626' stroke='%23FEF08A' stroke-width='1.5'/%3E%3Cpolygon points='60,18 64.5,31 78,31 67,39 71,52 60,44 49,52 53,39 42,31 55.5,31' fill='%23FACC15'/%3E%3Ctext x='60' y='66' font-family='Arial,sans-serif' font-weight='900' font-size='11.5' fill='%23FACC15' text-anchor='middle' letter-spacing='-0.3'%3ETHU%E1%BA%BE NH%C3%80 N%C6%AF%E1%BB%9AC%3C/text%3E%3Cpath d='M36,96 A26,26 0 0,1 84,96 L74,96 A16,16 0 0,0 46,96 Z' fill='%23FACC15'/%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            taxRed: '#C8102E',
+            taxNavy: '#1A365D',
+            taxNavyDark: '#102A43',
+            taxBg: '#F4F6F9',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+      background-color: #F4F6F9;
+      color: #1E293B;
+    }
+    .timeline-scroll::-webkit-scrollbar { height: 6px; }
+    .timeline-scroll::-webkit-scrollbar-track { background: #F1F5F9; border-radius: 999px; }
+    .timeline-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
+    .timeline-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+    .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.2s ease-out forwards; }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.25); opacity: 0.7; }
+    }
+    .animate-pulse-dot { animation: pulseDot 1.8s infinite ease-in-out; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP INTERNAL WARNING BANNER -->
+  <div class="bg-[#FFFDFB] border-b border-red-100 py-2 px-4 text-center shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+    <p class="text-[#C8102E] font-bold text-[15px] md:text-[17px] tracking-tight">
+      Chỉ lưu hành nội bộ. Công chức nào chia sẻ link ra ngoài ngành tự chịu trách nhiệm.
+    </p>
+  </div>
+
+  <!-- HERO BANNER WITH OFFICIAL LOGO & CAN THO BRIDGE -->
+  <div class="relative bg-white border-b border-slate-200/80 overflow-hidden">
+    <div class="max-w-[1440px] mx-auto relative min-h-[104px] md:min-h-[118px] flex items-center justify-between">
+      
+      <!-- Right side sharp Can Tho Bridge artwork / custom photo -->
+      <div class="absolute inset-y-0 right-0 w-full md:w-[68%] lg:w-[64%] pointer-events-none select-none overflow-hidden">
+        <!-- Custom photo layer if uploaded -->
+        <img id="customBridgeImg" src="" alt="Cầu Cần Thơ" class="hidden w-full h-full object-cover object-center" />
+        
+        <!-- Ultra-sharp Architectural Vector Illustration of Can Tho Bridge -->
+        <svg id="defaultBridgeSvg" viewBox="0 0 1120 220" preserveAspectRatio="xMidYMid slice" class="w-full h-full">
+          <defs>
+            <linearGradient id="skyClear" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#D4E9FC"/>
+              <stop offset="55%" stop-color="#EAF4FE"/>
+              <stop offset="100%" stop-color="#F7FBFF"/>
+            </linearGradient>
+            <linearGradient id="hauRiver" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#75A8CE"/>
+              <stop offset="45%" stop-color="#5B92BC"/>
+              <stop offset="100%" stop-color="#457AA3"/>
+            </linearGradient>
+            <linearGradient id="riverSheen" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.05"/>
+              <stop offset="45%" stop-color="#E0F2FE" stop-opacity="0.38"/>
+              <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#BAE6FD" stop-opacity="0.28"/>
+            </linearGradient>
+            <linearGradient id="pylonLit" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#FFFFFF"/>
+              <stop offset="60%" stop-color="#F1F5F9"/>
+              <stop offset="100%" stop-color="#CBD5E1"/>
+            </linearGradient>
+            <linearGradient id="pylonShadow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#94A3B8"/>
+              <stop offset="100%" stop-color="#64748B"/>
+            </linearGradient>
+            <linearGradient id="asphaltRoad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#475569"/>
+              <stop offset="50%" stop-color="#334155"/>
+              <stop offset="100%" stop-color="#1E293B"/>
+            </linearGradient>
+            <linearGradient id="islandLush" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4D7C0F"/>
+              <stop offset="60%" stop-color="#365314"/>
+              <stop offset="100%" stop-color="#1A2E05"/>
+            </linearGradient>
+            <linearGradient id="fadeLeftBanner" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+              <stop offset="14%" stop-color="#FFFFFF" stop-opacity="0.97"/>
+              <stop offset="28%" stop-color="#FFFFFF" stop-opacity="0.72"/>
+              <stop offset="42%" stop-color="#FFFFFF" stop-opacity="0.18"/>
+              <stop offset="52%" stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Sky -->
+          <rect width="1120" height="122" fill="url(#skyClear)"/>
+          <!-- Crisp horizon haze & distant Vinh Long / Can Tho tree line -->
+          <path d="M180,122 Q320,115 480,118 T820,116 T1120,119 L1120,124 L180,124 Z" fill="#94B49F" opacity="0.55"/>
+          <path d="M220,122 Q380,118 560,120 T920,118 T1120,121 L1120,124 L220,124 Z" fill="#658B6F" opacity="0.65"/>
+
+          <!-- Soft realistic clouds -->
+          <g fill="#FFFFFF" opacity="0.78">
+            <path d="M440,34 Q455,22 475,26 Q492,16 514,25 Q532,24 542,35 Q554,42 536,46 L442,46 Q428,43 440,34 Z"/>
+            <path d="M880,26 Q896,15 916,20 Q935,11 954,21 Q970,22 976,32 L878,32 Z" opacity="0.65"/>
+            <path d="M680,48 Q694,40 710,43 Q724,37 738,45 L676,48 Z" opacity="0.5"/>
+          </g>
+
+          <!-- Hau River Water -->
+          <rect y="122" width="1120" height="98" fill="url(#hauRiver)"/>
+          <rect y="122" width="1120" height="98" fill="url(#riverSheen)"/>
+          <!-- Fine water ripples -->
+          <g stroke="#E0F2FE" stroke-linecap="round" opacity="0.32">
+            <line x1="340" y1="136" x2="410" y2="136" stroke-width="1"/>
+            <line x1="510" y1="148" x2="620" y2="148" stroke-width="1.2"/>
+            <line x1="740" y1="142" x2="830" y2="142" stroke-width="1"/>
+            <line x1="420" y1="176" x2="540" y2="176" stroke-width="1.4"/>
+            <line x1="820" y1="185" x2="960" y2="185" stroke-width="1.5"/>
+            <line x1="290" y1="198" x2="390" y2="198" stroke-width="1.2"/>
+          </g>
+
+          <!-- Pylon Water Reflections -->
+          <g opacity="0.22" fill="#F8FAFC">
+            <polygon points="568,154 584,154 588,220 564,220"/>
+            <polygon points="846,144 868,144 876,220 840,220"/>
+          </g>
+
+          <!-- Con Au Islet (Lush green island under the main span) -->
+          <g>
+            <path d="M895,148 C925,134 985,132 1045,136 C1085,139 1110,145 1120,152 L1120,174 C1070,178 975,176 912,166 C894,162 886,154 895,148 Z" fill="url(#islandLush)"/>
+            <!-- Detailed coconut palms & river foliage -->
+            <g fill="#3F6212">
+              <circle cx="922" cy="145" r="9"/>
+              <circle cx="942" cy="141" r="11"/>
+              <circle cx="965" cy="139" r="12"/>
+              <circle cx="992" cy="140" r="11"/>
+              <circle cx="1018" cy="142" r="12"/>
+              <circle cx="1048" cy="143" r="11"/>
+              <circle cx="1078" cy="146" r="10"/>
+              <circle cx="1102" cy="149" r="9"/>
+            </g>
+            <g fill="#65A30D" opacity="0.85">
+              <circle cx="934" cy="143" r="6"/>
+              <circle cx="956" cy="138" r="7"/>
+              <circle cx="980" cy="138" r="7"/>
+              <circle cx="1008" cy="140" r="7"/>
+              <circle cx="1036" cy="141" r="7"/>
+              <circle cx="1066" cy="144" r="6"/>
+            </g>
+            <!-- Sandy bank edge -->
+            <path d="M896,156 Q980,171 1120,168" fill="none" stroke="#BEF264" stroke-width="1.2" opacity="0.45"/>
+          </g>
+
+          <!-- APPROACH VIADUCT PIERS -->
+          <g fill="#CBD5E1" stroke="#94A3B8" stroke-width="0.6">
+            <rect x="275" y="178" width="5" height="22"/>
+            <rect x="325" y="172" width="6" height="26"/>
+            <rect x="380" y="165" width="6" height="28"/>
+            <rect x="440" y="158" width="7" height="30"/>
+            <rect x="502" y="151" width="7" height="32"/>
+            <rect x="945" y="128" width="6" height="24"/>
+            <rect x="1005" y="129" width="5" height="22"/>
+            <rect x="1060" y="130" width="5" height="20"/>
+          </g>
+
+          <!-- FAR PYLON (Tower 2 - Right-Center) -->
+          <g id="farPylon">
+            <!-- Pier foundation -->
+            <rect x="843" y="134" width="28" height="12" rx="1.5" fill="#64748B"/>
+            <rect x="846" y="132" width="22" height="4" fill="#94A3B8"/>
+            <!-- Left & Right legs meeting into inverted-Y -->
+            <polygon points="846,132 851,132 856,74 851,74" fill="url(#pylonLit)"/>
+            <polygon points="851,132 853,132 857,74 856,74" fill="url(#pylonShadow)"/>
+            <polygon points="868,132 863,132 858,74 863,74" fill="url(#pylonLit)"/>
+            <polygon points="868,132 870,132 864,74 863,74" fill="url(#pylonShadow)"/>
+            <!-- Upper vertical shaft -->
+            <polygon points="852,74 862,74 860,24 854,24" fill="url(#pylonLit)"/>
+            <polygon points="860,74 863,74 861,24 860,24" fill="url(#pylonShadow)"/>
+            <!-- Crossbeams -->
+            <rect x="849" y="108" width="16" height="3.5" fill="#E2E8F0"/>
+            <rect x="852" y="74" width="10" height="3.5" fill="#E2E8F0"/>
+            <!-- Top red aviation beacon -->
+            <circle cx="857" cy="23" r="1.4" fill="#EF4444"/>
+          </g>
+
+          <!-- STAY CABLES FOR FAR PYLON (Back & Front Fan Planes) -->
+          <g stroke="#FFFFFF" stroke-width="0.7" opacity="0.88">
+            <!-- Left fan -->
+            <line x1="855" y1="30" x2="725" y2="132"/>
+            <line x1="855" y1="34" x2="742" y2="131"/>
+            <line x1="855" y1="38" x2="759" y2="130"/>
+            <line x1="855" y1="42" x2="776" y2="129"/>
+            <line x1="855" y1="46" x2="793" y2="128"/>
+            <line x1="855" y1="50" x2="810" y2="127"/>
+            <line x1="855" y1="54" x2="827" y2="126"/>
+            <!-- Right fan -->
+            <line x1="859" y1="30" x2="985" y2="127"/>
+            <line x1="859" y1="34" x2="968" y2="127"/>
+            <line x1="859" y1="38" x2="951" y2="126"/>
+            <line x1="859" y1="42" x2="934" y2="126"/>
+            <line x1="859" y1="46" x2="917" y2="125"/>
+            <line x1="859" y1="50" x2="900" y2="125"/>
+            <line x1="859" y1="54" x2="883" y2="125"/>
+          </g>
+
+          <!-- MAIN BRIDGE DECK (Sweeping S-Curve from foreground left to horizon right) -->
+          <g id="bridgeDeck">
+            <!-- Concrete box girder underside (3D depth) -->
+            <path d="M210,192 C350,174 520,148 690,134 C835,123 980,126 1120,131 L1120,136 C980,131 835,129 690,141 C520,156 350,183 210,202 Z" fill="#94A3B8"/>
+            <path d="M210,189 C350,171 520,145 690,131 C835,120 980,123 1120,129 L1120,132 C980,127 835,124 690,135 C520,149 350,175 210,193 Z" fill="#F8FAFC"/>
+            <!-- Asphalt roadway surface -->
+            <path d="M210,183 C350,165 520,139 690,127 C835,117 980,121 1120,127 L1120,130 C980,124 835,120 690,131 C520,145 350,171 210,189 Z" fill="url(#asphaltRoad)"/>
+            <!-- Center median barrier -->
+            <path d="M210,186 C350,168 520,142 690,129 C835,118.5 980,122.5 1120,128.5" fill="none" stroke="#E2E8F0" stroke-width="0.9"/>
+            <!-- Outer white safety parapet -->
+            <path d="M210,183 C350,165 520,139 690,127 C835,117 980,121 1120,127" fill="none" stroke="#FFFFFF" stroke-width="1.1"/>
+            
+            <!-- Street light poles along median -->
+            <g stroke="#E2E8F0" stroke-width="0.8">
+              <line x1="260" y1="180" x2="260" y2="171"/><line x1="310" y1="173" x2="310" y2="164"/>
+              <line x1="360" y1="166" x2="360" y2="158"/><line x1="415" y1="158" x2="415" y2="150"/>
+              <line x1="470" y1="150" x2="470" y2="143"/><line x1="525" y1="143" x2="525" y2="136"/>
+              <line x1="625" y1="133" x2="625" y2="126"/><line x1="685" y1="128" x2="685" y2="122"/>
+              <line x1="745" y1="124" x2="745" y2="118"/><line x1="805" y1="121" x2="805" y2="116"/>
+              <line x1="910" y1="121" x2="910" y2="116"/><line x1="975" y1="123" x2="975" y2="118"/>
+            </g>
+
+            <!-- Crisp vehicles moving on the bridge -->
+            <g>
+              <!-- White coach bus -->
+              <rect x="332" y="164" width="11" height="4" rx="1" fill="#FFFFFF" transform="rotate(-8 332 164)"/>
+              <!-- Red car -->
+              <rect x="402" y="156" width="6.5" height="3" rx="0.8" fill="#EF4444" transform="rotate(-7 402 156)"/>
+              <!-- Silver SUV -->
+              <rect x="486" y="144" width="7" height="3.2" rx="0.8" fill="#F1F5F9" transform="rotate(-6 486 144)"/>
+              <!-- Blue truck -->
+              <rect x="646" y="128" width="9" height="3.6" rx="0.8" fill="#2563EB" transform="rotate(-4 646 128)"/>
+              <!-- White car -->
+              <rect x="732" y="122" width="6" height="2.8" rx="0.7" fill="#FFFFFF" transform="rotate(-2 732 122)"/>
+            </g>
+          </g>
+
+          <!-- NEAR PYLON (Tower 1 - Foreground Hero Inverted-Y Tower) -->
+          <g id="nearPylon">
+            <!-- Water-level concrete pile cap -->
+            <polygon points="558,154 596,154 593,144 561,144" fill="#64748B"/>
+            <rect x="562" y="142" width="30" height="3" fill="#94A3B8"/>
+
+            <!-- Left inclined leg (3D lit face + shaded inner face) -->
+            <polygon points="562,142 569,142 576,66 570,66" fill="url(#pylonLit)"/>
+            <polygon points="569,142 572,142 578,66 576,66" fill="url(#pylonShadow)"/>
+
+            <!-- Right inclined leg (3D lit face + shaded outer face) -->
+            <polygon points="585,142 592,142 584,66 578,66" fill="url(#pylonLit)"/>
+            <polygon points="592,142 595,142 586,66 584,66" fill="url(#pylonShadow)"/>
+
+            <!-- Lower & Upper horizontal tie beams -->
+            <polygon points="566,112 588,112 588,116 566,116" fill="#E2E8F0"/>
+            <polygon points="566,116 588,116 588,118 566,118" fill="#94A3B8"/>
+            <polygon points="570,66 584,66 584,71 570,71" fill="#E2E8F0"/>
+
+            <!-- Upper vertical tower shaft -->
+            <polygon points="571,66 581,66 579,10 573,10" fill="url(#pylonLit)"/>
+            <polygon points="581,66 584,66 581,10 579,10" fill="url(#pylonShadow)"/>
+            <!-- Architectural cap & red aviation beacon -->
+            <rect x="573" y="8" width="8" height="2.5" fill="#CBD5E1"/>
+            <circle cx="577" cy="6.5" r="1.6" fill="#EF4444"/>
+          </g>
+
+          <!-- STAY CABLES FOR NEAR PYLON (Crisp twin-plane silver-white cables) -->
+          <g stroke-linecap="round">
+            <!-- Left Side Span Cables (Back plane - slightly softer) -->
+            <g stroke="#CBD5E1" stroke-width="0.75" opacity="0.85">
+              <line x1="575" y1="15" x2="395" y2="157"/>
+              <line x1="575" y1="20" x2="416" y2="154"/>
+              <line x1="575" y1="25" x2="437" y2="151"/>
+              <line x1="575" y1="30" x2="458" y2="148"/>
+              <line x1="575" y1="35" x2="479" y2="145"/>
+              <line x1="575" y1="40" x2="500" y2="142"/>
+              <line x1="575" y1="45" x2="521" y2="140"/>
+              <line x1="575" y1="50" x2="542" y2="137"/>
+            </g>
+            <!-- Left Side Span Cables (Front plane - bright crisp white) -->
+            <g stroke="#FFFFFF" stroke-width="0.95" opacity="0.96">
+              <line x1="573" y1="16" x2="388" y2="159"/>
+              <line x1="573" y1="21" x2="409" y2="156"/>
+              <line x1="573" y1="26" x2="430" y2="153"/>
+              <line x1="573" y1="31" x2="451" y2="150"/>
+              <line x1="573" y1="36" x2="472" y2="147"/>
+              <line x1="573" y1="41" x2="493" y2="144"/>
+              <line x1="573" y1="46" x2="514" y2="141"/>
+              <line x1="573" y1="51" x2="535" y2="139"/>
+            </g>
+
+            <!-- Right Main Span Cables (Back plane) -->
+            <g stroke="#CBD5E1" stroke-width="0.75" opacity="0.85">
+              <line x1="581" y1="15" x2="736" y2="124"/>
+              <line x1="581" y1="20" x2="716" y2="125"/>
+              <line x1="581" y1="25" x2="696" y2="127"/>
+              <line x1="581" y1="30" x2="676" y2="128"/>
+              <line x1="581" y1="35" x2="656" y2="130"/>
+              <line x1="581" y1="40" x2="636" y2="131"/>
+              <line x1="581" y1="45" x2="616" y2="133"/>
+              <line x1="581" y1="50" x2="598" y2="134"/>
+            </g>
+            <!-- Right Main Span Cables (Front plane - bright crisp white) -->
+            <g stroke="#FFFFFF" stroke-width="0.95" opacity="0.96">
+              <line x1="579" y1="16" x2="744" y2="124"/>
+              <line x1="579" y1="21" x2="724" y2="125"/>
+              <line x1="579" y1="26" x2="704" y2="126"/>
+              <line x1="579" y1="31" x2="684" y2="128"/>
+              <line x1="579" y1="36" x2="664" y2="129"/>
+              <line x1="579" y1="41" x2="644" y2="131"/>
+              <line x1="579" y1="46" x2="624" y2="132"/>
+              <line x1="579" y1="51" x2="604" y2="134"/>
+            </g>
+          </g>
+        </svg>
+
+        <!-- Smooth white gradient fade on the left edge so brand title stays crystal clear -->
+        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/75 md:via-white/30 to-transparent"></div>
+      </div>
+
+      <!-- Left Official Emblem + Brand Name ONLY ("Ứng dụng Ngành Thuế") -->
+      <div class="relative z-10 px-4 lg:px-6 py-3 flex items-center gap-3.5 md:gap-4">
+        <a href="#/home" onclick="navigateTo('overview'); return false;" class="flex items-center gap-3.5 md:gap-4 group">
+          <!-- Official Tax Emblem (Thuế Nhà Nước) -->
+          <div class="w-16 h-16 md:w-[74px] md:h-[74px] rounded-full shrink-0 shadow-md border-2 border-amber-300 bg-amber-400 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform">
+            <svg viewBox="0 0 120 120" class="w-full h-full">
+              <defs>
+                <radialGradient id="goldRim" cx="50%" cy="40%" r="55%">
+                  <stop offset="0%" stop-color="#FEF08A"/>
+                  <stop offset="55%" stop-color="#FACC15"/>
+                  <stop offset="100%" stop-color="#EAB308"/>
+                </radialGradient>
+                <radialGradient id="redCore" cx="50%" cy="45%" r="55%">
+                  <stop offset="0%" stop-color="#EF4444"/>
+                  <stop offset="70%" stop-color="#DC2626"/>
+                  <stop offset="100%" stop-color="#B91C1C"/>
+                </radialGradient>
+              </defs>
+              <circle cx="60" cy="60" r="59" fill="url(#goldRim)" />
+              <circle cx="60" cy="60" r="47.5" fill="url(#redCore)" stroke="#FEF08A" stroke-width="1.5"/>
+              <g stroke="#FEF08A" stroke-width="1" opacity="0.85">
+                <line x1="60" y1="14" x2="60" y2="18"/><line x1="48" y1="23" x2="51" y2="26"/>
+                <line x1="72" y1="23" x2="69" y2="26"/><line x1="44" y1="36" x2="48" y2="36"/>
+                <line x1="76" y1="36" x2="72" y2="36"/>
+              </g>
+              <polygon points="60,17 64.6,30.5 79,30.5 67.4,38.8 71.8,52.2 60,44 48.2,52.2 52.6,38.8 41,30.5 55.4,30.5" fill="#FACC15" stroke="#FEF9C3" stroke-width="0.6"/>
+              <g fill="#FACC15" stroke="#B45309" stroke-width="0.3">
+                <ellipse cx="27" cy="42" rx="3" ry="5.5" transform="rotate(-25 27 42)"/>
+                <ellipse cx="23" cy="51" rx="3" ry="5.5" transform="rotate(-12 23 51)"/>
+                <ellipse cx="22" cy="61" rx="3" ry="5.5" transform="rotate(2 22 61)"/>
+                <ellipse cx="24" cy="71" rx="3" ry="5.5" transform="rotate(16 24 71)"/>
+                <ellipse cx="29" cy="80" rx="3" ry="5.5" transform="rotate(30 29 80)"/>
+                <ellipse cx="36" cy="88" rx="3" ry="5.5" transform="rotate(42 36 88)"/>
+                <ellipse cx="93" cy="42" rx="3" ry="5.5" transform="rotate(25 93 42)"/>
+                <ellipse cx="97" cy="51" rx="3" ry="5.5" transform="rotate(12 97 51)"/>
+                <ellipse cx="98" cy="61" rx="3" ry="5.5" transform="rotate(-2 98 61)"/>
+                <ellipse cx="96" cy="71" rx="3" ry="5.5" transform="rotate(-16 96 71)"/>
+                <ellipse cx="91" cy="80" rx="3" ry="5.5" transform="rotate(-30 91 80)"/>
+                <ellipse cx="84" cy="88" rx="3" ry="5.5" transform="rotate(-42 84 88)"/>
+              </g>
+              <text x="60" y="65.5" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="11.2" fill="#FACC15" stroke="#991B1B" stroke-width="0.4" text-anchor="middle" letter-spacing="-0.2">THUẾ NHÀ NƯỚC</text>
+              <g fill="#FACC15" stroke="#B45309" stroke-width="0.4">
+                <path d="M38,97 A24,24 0 0,1 82,97 L73,97 A15,15 0 0,0 47,97 Z"/>
+                <rect x="57.5" y="71" width="5" height="5" rx="0.5"/>
+                <rect x="46" y="74" width="5" height="5" rx="0.5" transform="rotate(-28 48.5 76.5)"/>
+                <rect x="69" y="74" width="5" height="5" rx="0.5" transform="rotate(28 71.5 76.5)"/>
+                <rect x="38" y="83" width="5" height="5" rx="0.5" transform="rotate(-55 40.5 85.5)"/>
+                <rect x="77" y="83" width="5" height="5" rx="0.5" transform="rotate(55 79.5 85.5)"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Clean Brand Title: ỨNG DỤNG NGÀNH THUẾ -->
+          <div class="leading-tight drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">
+            <h1 class="text-[#C8102E] font-extrabold text-[20px] sm:text-[24px] md:text-[27px] tracking-tight uppercase">
+              ỨNG DỤNG NGÀNH THUẾ
+            </h1>
+            <p class="text-[12.5px] sm:text-[13.5px] text-slate-600 font-semibold mt-0.5">
+              Tra cứu văn bản pháp luật thuế &amp; Hỗ trợ nghiệp vụ
+            </p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Subtle button on bottom-right of banner to optionally upload a real photo -->
+      <div class="relative z-10 self-end p-2 hidden sm:block">
+        <label for="bridgePhotoInput" title="Thay ảnh chụp Cầu Cần Thơ thực tế từ máy tính" class="cursor-pointer inline-flex items-center gap-1.5 bg-white/85 hover:bg-white text-slate-600 hover:text-[#1A365D] text-[11px] font-medium px-2.5 py-1 rounded-full border border-slate-200/80 shadow-sm backdrop-blur-sm transition">
+          <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span>Đổi ảnh nền cầu</span>
+        </label>
+        <input type="file" id="bridgePhotoInput" accept="image/*" class="hidden" onchange="handleBridgePhotoUpload(event)" />
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN SEARCH & ACTION BAR -->
+  <header class="bg-white/95 backdrop-blur-sm border-b border-slate-200/90 sticky top-0 z-30 shadow-[0_1px_3px_rgba(15,23,42,0.03)]">
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <!-- Mobile Menu Toggle -->
+      <div class="flex items-center gap-2 lg:hidden">
+        <button id="mobileMenuBtn" class="p-2 rounded-lg text-slate-600 hover:bg-slate-100 border border-slate-200" aria-label="Mở menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <span class="text-xs font-bold text-slate-700">Danh mục nghiệp vụ</span>
+      </div>
+
+      <!-- Search Input -->
+      <div class="flex-1 min-w-[240px] max-w-2xl">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.3-4.3"/>
+            </svg>
+          </span>
+          <input
+            id="globalSearchInput"
+            type="text"
+            placeholder="Tìm số hiệu, tên văn bản, nội dung... (gõ không dấu được)"
+            class="w-full pl-10 pr-9 py-2 bg-[#F8FAFC] border border-slate-200 rounded-full text-[13.5px] text-slate-700 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition"
+          />
+          <button id="clearSearchBtn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Action Buttons: Fetch News + Admin Portal -->
+      <div class="shrink-0 flex items-center gap-2">
+        <button
+          id="fetchNewsBtn"
+          onclick="handleFetchLatestNews()"
+          class="inline-flex items-center gap-2 bg-[#EF533F] hover:bg-[#DC3D29] active:scale-[0.99] text-white font-semibold text-[13px] px-4 py-2 rounded-full shadow-sm transition cursor-pointer"
+        >
+          <svg id="fetchSpinner" class="w-4 h-4 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+          <span>Lấy tin mới</span>
+        </button>
+
+        <button
+          onclick="openAdminModal()"
+          title="Quản trị & Cập nhật dữ liệu trực tiếp lên hệ thống"
+          class="inline-flex items-center gap-1.5 bg-[#1A365D] hover:bg-[#102A43] active:scale-[0.99] text-white font-semibold text-[13px] px-3.5 py-2 rounded-full shadow-sm transition cursor-pointer"
+        >
+          <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <span>Quản trị</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE -->
+  <div class="flex-1 max-w-[1440px] w-full mx-auto flex relative">
+
+    <!-- MOBILE BACKDROP -->
+    <div id="sidebarBackdrop" class="fixed inset-0 bg-slate-900/30 z-30 hidden lg:hidden" onclick="toggleMobileSidebar(false)"></div>
+
+    <!-- LEFT SIDEBAR -->
+    <aside id="leftSidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-[235px] shrink-0 bg-white border-r border-slate-200/80 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-out">
+      <div class="p-3 space-y-4 overflow-y-auto">
+        <!-- Overview -->
+        <div>
+          <button onclick="navigateTo('overview')" data-nav="overview" class="nav-item w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13.5px] font-semibold bg-[#EBF3FE] text-[#1D4ED8] transition cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span>Tổng quan</span>
+          </button>
+        </div>
+
+        <!-- Group 1: Tra cứu pháp luật -->
+        <div>
+          <p class="px-3 mb-1.5 text-[11px] font-semibold text-slate-400 tracking-wide">Tra cứu pháp luật</p>
+          <div class="space-y-1">
+            <button onclick="navigateTo('library')" data-nav="library" class="nav-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>Thư viện văn bản</span>
+              </span>
+              <span id="sidebarDocCount" class="text-[11px] font-semibold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-md">57</span>
+            </button>
+
+            <button onclick="navigateTo('hierarchy')" data-nav="hierarchy" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+              <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+              </svg>
+              <span>Luật → NĐ → Thông tư</span>
+            </button>
+
+            <button onclick="navigateTo('quickdata')" data-nav="quickdata" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+              <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+              </svg>
+              <span>Số liệu tra nhanh</span>
+            </button>
+
+            <button onclick="navigateTo('penalties')" data-nav="penalties" class="nav-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                </svg>
+                <span>Cẩm nang xử phạt</span>
+              </span>
+              <span id="sidebarPenaltyCount" class="text-[11px] font-semibold bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded-md">17</span>
+            </button>
+
+            <button onclick="navigateTo('news')" data-nav="news" class="nav-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+              <span class="flex items-center gap-2.5">
+                <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                </svg>
+                <span>Tin mới cập nhật</span>
+              </span>
+              <span id="sidebarNewsBadge" class="w-2 h-2 rounded-full bg-red-500"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Group 2: Hóa đơn rủi ro -->
+        <div>
+          <p class="px-3 mb-1.5 text-[11px] font-semibold text-slate-400 tracking-wide">Hóa đơn rủi ro</p>
+          <button onclick="navigateTo('risk')" data-nav="risk" class="nav-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+            <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+            <span>Tra cứu rủi ro HĐ</span>
+          </button>
+        </div>
+
+        <!-- Group 3: Trao đổi nội bộ & Trợ lý AI -->
+        <div>
+          <p class="px-3 mb-1.5 text-[11px] font-semibold text-slate-400 tracking-wide">Hỗ trợ &amp; Thảo luận</p>
+          <button onclick="navigateTo('chat')" data-nav="chat" class="nav-item w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-[13px] font-medium text-slate-600 hover:bg-slate-50 transition cursor-pointer">
+            <span class="flex items-center gap-2.5">
+              <svg class="w-4 h-4 text-blue-600 shrink-0" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+              </svg>
+              <span>Trao đổi &amp; Trợ lý AI</span>
+            </span>
+            <span class="inline-flex items-center gap-1 text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse-dot"></span>Live
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sidebar Copyright Footer -->
+      <div class="p-3 border-t border-slate-100 bg-slate-50/70">
+        <div class="bg-white border border-slate-200/80 rounded-xl p-2.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+          <div class="flex items-center gap-1.5 text-[11px] font-bold text-[#1A365D] mb-1">
+            <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            <span>BẢN QUYỀN SỞ HỮU</span>
+          </div>
+          <p class="text-[11px] leading-[1.45] text-slate-600">
+            Bản quyền thuộc về <strong class="text-slate-800">Công chức Nguyễn Thanh Nghị</strong><br/>
+            <span class="text-slate-500">Tổ quản lý, hỗ trợ cá nhân, hộ kinh doanh – Thuế cơ sở 5 thành phố Cần Thơ</span>
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 min-w-0 p-4 lg:p-6 space-y-5">
+
+      <!-- SEARCH RESULTS OVERLAY BANNER (Shown when user types in search bar) -->
+      <div id="searchResultsSection" class="hidden animate-fadeIn space-y-3">
+        <div class="bg-white border border-blue-200 rounded-2xl p-4 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+              <h2 class="text-[15px] font-bold text-slate-800">
+                Kết quả tìm kiếm cho "<span id="searchQueryLabel" class="text-blue-600"></span>"
+              </h2>
+              <span id="searchCountBadge" class="text-xs font-semibold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">0 văn bản</span>
+            </div>
+            <button onclick="clearGlobalSearch()" class="text-xs font-semibold text-slate-500 hover:text-slate-800 px-2.5 py-1 rounded-lg hover:bg-slate-100">
+              Đóng tìm kiếm
+            </button>
+          </div>
+          <div id="searchResultsList" class="divide-y divide-slate-100 max-h-[380px] overflow-y-auto"></div>
+        </div>
+      </div>
+
+      <!-- VIEW 1: TỔNG QUAN (OVERVIEW DASHBOARD) -->
+      <section id="view-overview" class="view-section space-y-5 animate-fadeIn">
+
+        <!-- Onboarding Guide Banner -->
+        <div id="guideBanner" class="bg-white border border-slate-200/80 border-l-4 border-l-blue-500 rounded-2xl px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="text-lg">👋</span>
+            <p class="text-[13.5px] text-slate-700">
+              Lần đầu dùng phần mềm? Xem hướng dẫn sử dụng từng mục — khoảng 5 phút là nắm được cách tra cứu, xem hạn nộp, cập nhật văn bản mới và trao đổi trực tuyến.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="openGuideModal()" class="bg-[#1D4ED8] hover:bg-blue-700 text-white text-[12.5px] font-semibold px-3.5 py-1.5 rounded-lg transition cursor-pointer">
+              Xem hướng dẫn
+            </button>
+            <button onclick="document.getElementById('guideBanner').classList.add('hidden')" class="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 text-[12.5px] font-medium px-3 py-1.5 rounded-lg transition cursor-pointer">
+              Ẩn
+            </button>
+          </div>
+        </div>
+
+        <!-- Top 2 Stat Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4">
+          <!-- Card 1: Kho văn bản pháp luật -->
+          <div onclick="navigateTo('library')" class="lg:col-span-3 bg-white border border-slate-200/80 rounded-2xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-blue-300 transition cursor-pointer flex items-start justify-between">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">KHO VĂN BẢN PHÁP LUẬT</p>
+              <p id="statTotalDocs" class="text-[32px] font-extrabold text-slate-800 leading-tight mt-1">57</p>
+              <p class="text-[12px] text-slate-400 mt-1">12 lĩnh vực thuế</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card 2: Đang có hiệu lực -->
+          <div onclick="navigateTo('library', 'active')" class="lg:col-span-3 bg-white border border-slate-200/80 rounded-2xl p-4 shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-emerald-300 transition cursor-pointer flex items-start justify-between">
+            <div>
+              <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">ĐANG CÓ HIỆU LỰC</p>
+              <p id="statActiveDocs" class="text-[32px] font-extrabold text-slate-800 leading-tight mt-1">44</p>
+              <p class="text-[12px] text-slate-400 mt-1">13 lịch sử đối chiếu</p>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Action Pill Buttons -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="navigateTo('penalties')" class="inline-flex items-center gap-2 bg-white hover:bg-amber-50/70 border border-slate-200/90 rounded-full px-3.5 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition cursor-pointer">
+            <span class="text-amber-500 text-sm">⚖️</span>
+            <span class="text-[13px] font-semibold text-slate-700">Tra mức phạt Thuế &amp; Hóa đơn</span>
+            <span class="text-[10.5px] font-bold bg-red-50 text-[#C8102E] px-2 py-0.5 rounded-full">NĐ 125 &amp; 310</span>
+          </button>
+
+          <button onclick="navigateTo('chat')" class="inline-flex items-center gap-2 bg-white hover:bg-blue-50/70 border border-slate-200/90 rounded-full px-3.5 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition cursor-pointer">
+            <span class="text-blue-600 text-sm">💬</span>
+            <span class="text-[13px] font-semibold text-slate-700">Phòng trao đổi công chức &amp; Hỏi Trợ lý AI</span>
+            <span class="text-[10.5px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full">Trực tuyến</span>
+          </button>
+        </div>
+
+        <!-- Bottom Grid: Date & Deadline Card (Left) + Effectiveness Timeline (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+
+          <!-- Left Navy Date & Tax Deadline Card -->
+          <div class="lg:col-span-4 bg-gradient-to-br from-[#1E3A6D] via-[#17305C] to-[#0F2347] text-white rounded-2xl p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[290px]">
+            <!-- Subtle Tax Emblem Watermark -->
+            <div class="absolute right-4 bottom-6 w-28 h-28 rounded-full border-[5px] border-white/[0.06] flex flex-col items-center justify-center pointer-events-none select-none">
+              <span class="text-white/[0.07] text-2xl leading-none">★</span>
+              <span class="text-white/[0.07] text-[9px] font-extrabold tracking-tighter mt-1">THUẾ NHÀ NƯỚC</span>
+            </div>
+
+            <div>
+              <p id="currentDayName" class="text-[13.5px] text-blue-200 font-medium">Thứ tư</p>
+              <p id="currentDateBig" class="text-[44px] font-extrabold tracking-tight leading-none mt-1.5">25/11</p>
+              <p id="currentYearText" class="text-[14px] text-blue-200/90 mt-1.5 font-medium">2026</p>
+            </div>
+
+            <div class="pt-5 border-t border-white/15 mt-6 relative z-10">
+              <p class="text-[12px] text-blue-200 font-medium">Hạn gần nhất</p>
+              <p id="deadlineTitleText" class="text-[14.5px] font-bold text-white leading-snug mt-1">
+                Khai, nộp thuế GTGT và TNCN khấu trừ tháng 11/2026
+              </p>
+              <div class="flex flex-wrap items-center gap-2 mt-2.5">
+                <span id="deadlineDateText" class="text-[13px] font-bold text-[#60A5FA]">21/12/2026</span>
+                <span id="deadlineCountdownText" class="bg-white/95 text-[#1A365D] text-[11.5px] font-bold px-2.5 py-0.5 rounded-full shadow-sm">
+                  còn 26 ngày
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Effectiveness Timeline Card -->
+          <div class="lg:col-span-8 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+            <div>
+              <!-- Header -->
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                <div class="flex flex-wrap items-baseline gap-2.5">
+                  <h2 class="text-[16px] font-bold text-slate-800">Dòng thời gian hiệu lực</h2>
+                  <span class="text-[12.5px] text-slate-500">
+                    <strong id="timelineActiveText" class="text-slate-700">44</strong> văn bản đang áp dụng · <strong class="text-slate-700">0</strong> sắp có hiệu lực
+                  </span>
+                </div>
+                <button onclick="scrollTimelineToToday()" class="text-[12.5px] font-semibold text-slate-600 hover:text-blue-600 transition cursor-pointer">
+                  Tới hôm nay
+                </button>
+              </div>
+
+              <!-- Horizontal Node Track -->
+              <div id="timelineTrack" class="timeline-scroll overflow-x-auto pb-3 pt-2 select-none">
+                <div class="min-w-[680px] relative px-4">
+                  <!-- Base Horizontal Line -->
+                  <div class="h-[2px] bg-blue-400/70 w-full relative top-[9px]"></div>
+
+                  <!-- Milestone Nodes -->
+                  <div class="relative flex items-center justify-between">
+                    <button onclick="selectTimelineMilestone('2024-01')" class="group flex flex-col items-center cursor-pointer" title="01/01/2024">
+                      <span class="w-3.5 h-3.5 rounded-full bg-white border-[2.5px] border-blue-500 group-hover:scale-125 transition"></span>
+                    </button>
+
+                    <button onclick="selectTimelineMilestone('2025-01')" class="group flex flex-col items-center cursor-pointer" title="01/01/2025">
+                      <span class="w-3.5 h-3.5 rounded-full bg-white border-[2.5px] border-blue-500 group-hover:scale-125 transition"></span>
+                    </button>
+
+                    <div class="flex items-center gap-2 relative">
+                      <button onclick="selectTimelineMilestone('2025-07')" class="group flex flex-col items-center cursor-pointer" title="01/07/2025">
+                        <span class="w-3.5 h-3.5 rounded-full bg-blue-600 ring-4 ring-blue-100 transition"></span>
+                      </button>
+                      <button onclick="selectTimelineMilestone('2025-10')" class="group flex flex-col items-center cursor-pointer" title="01/10/2025">
+                        <span class="w-3.5 h-3.5 rounded-full bg-white border-[2.5px] border-blue-500 group-hover:scale-125 transition"></span>
+                      </button>
+                      <span class="absolute top-5 left-1/2 -translate-x-1/2 text-[10.5px] font-medium text-slate-400">2026</span>
+                    </div>
+
+                    <div class="flex items-center gap-2.5">
+                      <button onclick="selectTimelineMilestone('2026-01')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                      <button onclick="selectTimelineMilestone('2026-03')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                      <button onclick="selectTimelineMilestone('2026-05')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                      <button onclick="selectTimelineMilestone('2026-07')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                    </div>
+
+                    <div class="flex items-center gap-2.5">
+                      <button onclick="selectTimelineMilestone('2026-08')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                      <button onclick="selectTimelineMilestone('2026-09')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                      <button onclick="selectTimelineMilestone('2026-10')" class="w-3 h-3 rounded-full bg-white border-2 border-blue-500 hover:scale-125 transition cursor-pointer"></button>
+                    </div>
+
+                    <button onclick="selectTimelineMilestone('2026-11')" class="w-3.5 h-3.5 rounded-full bg-white border-[2.5px] border-blue-500 hover:scale-125 transition cursor-pointer" title="15/11/2026"></button>
+
+                    <!-- TODAY VERTICAL RED MARKER -->
+                    <div id="todayMarkerNode" class="relative flex flex-col items-center">
+                      <div class="w-[2px] h-7 bg-red-400 -mt-2"></div>
+                      <span class="absolute -top-2 left-2.5 whitespace-nowrap text-[10px] font-bold text-red-500">Hôm nay</span>
+                      <span class="absolute top-6 left-1/2 -translate-x-1/2 text-[10.5px] font-medium text-slate-400">2027</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3 Milestone Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 pt-2">
+              <!-- Milestone Card 1: 01/07/2025 -->
+              <div class="bg-[#F8FAFC] border border-slate-200/80 rounded-xl p-3.5 hover:border-blue-300 transition">
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-[16px] font-extrabold text-[#1D4ED8]">01/07</span>
+                  <span class="text-[11px] font-medium text-slate-400">2025</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-0.5 mb-2.5">Có hiệu lực · 4 văn bản</p>
+                <div class="space-y-2 text-[12px] leading-snug">
+                  <div onclick="openDocModal('48/2024/QH15')" class="cursor-pointer hover:text-blue-700">
+                    <span class="font-bold text-slate-800">48/2024/QH15</span>
+                    <span class="text-slate-600"> Luật Thuế giá trị gia tăng</span>
+                  </div>
+                  <div onclick="openDocModal('181/2025/NĐ-CP')" class="cursor-pointer hover:text-blue-700">
+                    <span class="font-bold text-slate-800">181/2025/NĐ-CP</span>
+                    <span class="text-slate-600"> Quy định chi tiết thi hành Luật Thuế giá trị gia tăng</span>
+                  </div>
+                  <div onclick="openDocModal('69/2025/TT-BTC')" class="cursor-pointer hover:text-blue-700">
+                    <span class="font-bold text-slate-800">69/2025/TT-BTC</span>
+                    <span class="text-slate-600"> Quy định chi tiết Luật Thuế GTGT và hướng dẫn Nghị định 181/2025/NĐ-CP</span>
+                  </div>
+                  <button onclick="navigateTo('library')" class="text-[11.5px] font-semibold text-blue-600 hover:underline pt-0.5 cursor-pointer">
+                    +1 văn bản khác
+                  </button>
+                </div>
+              </div>
+
+              <!-- Milestone Card 2: 01/10/2025 -->
+              <div class="bg-[#F8FAFC] border border-slate-200/80 rounded-xl p-3.5 hover:border-blue-300 transition">
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-[16px] font-extrabold text-[#1D4ED8]">01/10</span>
+                  <span class="text-[11px] font-medium text-slate-400">2025</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-0.5 mb-2.5">Có hiệu lực · 1 văn bản</p>
+                <div class="space-y-2 text-[12px] leading-snug">
+                  <div onclick="openDocModal('67/2025/QH15')" class="cursor-pointer hover:text-blue-700">
+                    <span class="font-bold text-slate-800">67/2025/QH15</span>
+                    <span class="text-slate-600"> Luật Thuế thu nhập doanh nghiệp</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Milestone Card 3: 15/11/2026 -->
+              <div class="bg-[#F8FAFC] border border-slate-200/80 rounded-xl p-3.5 hover:border-blue-300 transition">
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-[16px] font-extrabold text-[#1D4ED8]">15/11</span>
+                  <span class="text-[11px] font-medium text-slate-400">2026</span>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-0.5 mb-2.5">Có hiệu lực · 1 văn bản</p>
+                <div class="space-y-2 text-[12px] leading-snug">
+                  <div onclick="openDocModal('320/2025/NĐ-CP')" class="cursor-pointer hover:text-blue-700">
+                    <span class="font-bold text-slate-800">320/2025/NĐ-CP</span>
+                    <span class="text-slate-600"> Quy định chi tiết thi hành một số điều của Luật Thuế TNDN</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: THƯ VIỆN VĂN BẢN -->
+      <section id="view-library" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <h2 class="text-[18px] font-bold text-slate-800">Thư viện văn bản pháp luật thuế</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Danh mục tổng hợp Luật, Nghị định, Thông tư và Công văn hướng dẫn nghiệp vụ</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <select id="filterDomain" onchange="renderLibraryTable()" class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-700 focus:outline-none focus:border-blue-400">
+                <option value="ALL">Tất cả lĩnh vực thuế</option>
+                <option value="GTGT">Thuế Giá trị gia tăng (GTGT)</option>
+                <option value="TNDN">Thuế Thu nhập doanh nghiệp (TNDN)</option>
+                <option value="TNCN">Thuế Thu nhập cá nhân &amp; HKD</option>
+                <option value="QLT">Quản lý thuế &amp; Hóa đơn</option>
+                <option value="XUPHAT">Xử phạt vi phạm hành chính</option>
+              </select>
+              <select id="filterStatus" onchange="renderLibraryTable()" class="text-xs bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-slate-700 focus:outline-none focus:border-blue-400">
+                <option value="ALL">Tất cả trạng thái</option>
+                <option value="active">Đang có hiệu lực</option>
+                <option value="expired">Hết hiệu lực / Đối chiếu</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-[11.5px] font-bold uppercase text-slate-400">
+                  <th class="py-3 px-3">Số hiệu</th>
+                  <th class="py-3 px-3">Trích yếu nội dung</th>
+                  <th class="py-3 px-3">Lĩnh vực</th>
+                  <th class="py-3 px-3">Ngày hiệu lực</th>
+                  <th class="py-3 px-3">Trạng thái</th>
+                  <th class="py-3 px-3 text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="libraryTableBody" class="divide-y divide-slate-100 text-[13px]"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 3: LUẬT -> NGHỊ ĐỊNH -> THÔNG TƯ -->
+      <section id="view-hierarchy" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+          <h2 class="text-[18px] font-bold text-slate-800 mb-1">Hệ thống hóa Luật → Nghị định → Thông tư</h2>
+          <p class="text-xs text-slate-500 mb-5">Tra cứu chuỗi văn bản hướng dẫn thi hành theo từng sắc thuế</p>
+
+          <div class="space-y-4">
+            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="bg-blue-600 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-md">LUẬT GỐC</span>
+                <h3 class="font-bold text-slate-800 text-[14.5px]">Luật Thuế Giá trị gia tăng số 48/2024/QH15 (Hiệu lực 01/07/2025)</h3>
+              </div>
+              <div class="pl-4 border-l-2 border-blue-300 space-y-2.5">
+                <div class="bg-white p-3 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10.5px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded mr-2">NGHỊ ĐỊNH</span>
+                    <strong class="text-slate-800 text-[13px]">181/2025/NĐ-CP</strong>
+                    <span class="text-slate-600 text-[13px]"> — Quy định chi tiết thi hành một số điều của Luật Thuế GTGT</span>
+                  </div>
+                  <button onclick="openDocModal('181/2025/NĐ-CP')" class="text-xs font-semibold text-blue-600 hover:underline shrink-0 ml-2 cursor-pointer">Xem chi tiết</button>
+                </div>
+                <div class="pl-5 border-l-2 border-emerald-300">
+                  <div class="bg-white p-3 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                      <span class="text-[10.5px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded mr-2">THÔNG TƯ</span>
+                      <strong class="text-slate-800 text-[13px]">69/2025/TT-BTC</strong>
+                      <span class="text-slate-600 text-[13px]"> — Hướng dẫn chi tiết Nghị định 181/2025/NĐ-CP về thuế GTGT</span>
+                    </div>
+                    <button onclick="openDocModal('69/2025/TT-BTC')" class="text-xs font-semibold text-blue-600 hover:underline shrink-0 ml-2 cursor-pointer">Xem chi tiết</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="bg-blue-600 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-md">LUẬT GỐC</span>
+                <h3 class="font-bold text-slate-800 text-[14.5px]">Luật Thuế Thu nhập doanh nghiệp số 67/2025/QH15 (Hiệu lực 01/10/2025)</h3>
+              </div>
+              <div class="pl-4 border-l-2 border-blue-300 space-y-2.5">
+                <div class="bg-white p-3 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10.5px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded mr-2">NGHỊ ĐỊNH</span>
+                    <strong class="text-slate-800 text-[13px]">320/2025/NĐ-CP</strong>
+                    <span class="text-slate-600 text-[13px]"> — Quy định chi tiết thi hành một số điều của Luật Thuế TNDN (Hiệu lực 15/11/2026)</span>
+                  </div>
+                  <button onclick="openDocModal('320/2025/NĐ-CP')" class="text-xs font-semibold text-blue-600 hover:underline shrink-0 ml-2 cursor-pointer">Xem chi tiết</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-xl p-4 bg-slate-50/50">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="bg-blue-600 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-md">LUẬT GỐC</span>
+                <h3 class="font-bold text-slate-800 text-[14.5px]">Luật Quản lý thuế số 38/2019/QH14 &amp; Luật sửa đổi 56/2024/QH15</h3>
+              </div>
+              <div class="pl-4 border-l-2 border-blue-300 space-y-2.5">
+                <div class="bg-white p-3 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                  <div>
+                    <span class="text-[10.5px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded mr-2">NGHỊ ĐỊNH</span>
+                    <strong class="text-slate-800 text-[13px]">126/2020/NĐ-CP &amp; 125/2020/NĐ-CP</strong>
+                    <span class="text-slate-600 text-[13px]"> — Quản lý thuế &amp; Xử phạt VPHC về thuế, hóa đơn (sửa đổi bởi NĐ 310)</span>
+                  </div>
+                  <button onclick="navigateTo('penalties')" class="text-xs font-semibold text-blue-600 hover:underline shrink-0 ml-2 cursor-pointer">Tra mức phạt</button>
+                </div>
+                <div class="pl-5 border-l-2 border-emerald-300">
+                  <div class="bg-white p-3 rounded-lg border border-slate-200/80 flex items-center justify-between">
+                    <div>
+                      <span class="text-[10.5px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded mr-2">THÔNG TƯ</span>
+                      <strong class="text-slate-800 text-[13px]">40/2021/TT-BTC &amp; 80/2021/TT-BTC</strong>
+                      <span class="text-slate-600 text-[13px]"> — Hướng dẫn thuế đối với hộ kinh doanh, cá nhân kinh doanh &amp; quản lý thuế</span>
+                    </div>
+                    <button onclick="openDocModal('40/2021/TT-BTC')" class="text-xs font-semibold text-blue-600 hover:underline shrink-0 ml-2 cursor-pointer">Xem chi tiết</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 4: SỐ LIỆU TRA NHANH & TÍNH TIỀN CHẬM NỘP -->
+      <section id="view-quickdata" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div class="lg:col-span-7 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+            <h2 class="text-[17px] font-bold text-slate-800 mb-1">Bảng số liệu &amp; Ngưỡng thuế tra nhanh</h2>
+            <p class="text-xs text-slate-500 mb-4">Các mốc doanh thu, thuế suất và mức giảm trừ áp dụng hiện hành</p>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-[13px]">
+                <thead>
+                  <tr class="bg-slate-50 border-y border-slate-200 text-[11.5px] font-bold text-slate-500 uppercase">
+                    <th class="py-2.5 px-3">Chỉ tiêu nghiệp vụ</th>
+                    <th class="py-2.5 px-3">Mức áp dụng</th>
+                    <th class="py-2.5 px-3">Căn cứ pháp lý</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">Ngưỡng doanh thu chịu thuế Hộ kinh doanh (từ 01/01/2026)</td>
+                    <td class="py-2.5 px-3 font-bold text-blue-700">&gt; 200 triệu đồng/năm</td>
+                    <td class="py-2.5 px-3 text-slate-500">Luật Thuế GTGT 48/2024/QH15</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">Tỷ lệ tính tiền chậm nộp tiền thuế</td>
+                    <td class="py-2.5 px-3 font-bold text-red-600">0,03% / ngày</td>
+                    <td class="py-2.5 px-3 text-slate-500">Điều 59 Luật QLT 38/2019/QH14</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">Tỷ lệ thuế HKD: Phân phối, cung cấp hàng hóa</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-800">1% GTGT + 0,5% TNCN</td>
+                    <td class="py-2.5 px-3 text-slate-500">Thông tư 40/2021/TT-BTC</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">Tỷ lệ thuế HKD: Dịch vụ, xây dựng không bao thầu NVL</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-800">5% GTGT + 2% TNCN</td>
+                    <td class="py-2.5 px-3 text-slate-500">Thông tư 40/2021/TT-BTC</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">Tỷ lệ thuế HKD: Sản xuất, vận tải, dịch vụ gắn hàng hóa</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-800">3% GTGT + 1,5% TNCN</td>
+                    <td class="py-2.5 px-3 text-slate-500">Thông tư 40/2021/TT-BTC</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2.5 px-3 font-medium text-slate-800">Thuế suất thuế TNDN phổ thông</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-800">20% (15% - 17% DN nhỏ)</td>
+                    <td class="py-2.5 px-3 text-slate-500">Luật Thuế TNDN 67/2025/QH15</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Late Payment Calculator (0.03%/day) -->
+          <div class="lg:col-span-5 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-lg">🧮</span>
+              <h2 class="text-[17px] font-bold text-slate-800">Tính nhanh tiền chậm nộp (0,03%/ngày)</h2>
+            </div>
+            <p class="text-xs text-slate-500 mb-4">Tính từ ngày tiếp theo ngày hết hạn nộp đến ngày liền kề trước ngày nộp tiền vào NSNN</p>
+
+            <div class="space-y-3 text-[13px]">
+              <div>
+                <label class="block font-semibold text-slate-700 mb-1">Số tiền thuế chậm nộp (đồng)</label>
+                <input id="calcTaxAmount" type="number" value="10000000" class="w-full px-3 py-2 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-blue-400 focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block font-semibold text-slate-700 mb-1">Hạn nộp thuế</label>
+                  <input id="calcDueDate" type="date" value="2026-10-20" class="w-full px-3 py-2 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-blue-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-700 mb-1">Ngày nộp thực tế</label>
+                  <input id="calcPayDate" type="date" value="2026-11-25" class="w-full px-3 py-2 border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-blue-400 focus:outline-none" />
+                </div>
+              </div>
+              <button onclick="calculateLateFee()" class="w-full py-2.5 bg-[#1A365D] hover:bg-[#102A43] text-white font-semibold rounded-xl transition cursor-pointer">
+                Tính tiền chậm nộp
+              </button>
+
+              <div id="calcResultBox" class="bg-blue-50/70 border border-blue-200 rounded-xl p-3.5 space-y-1">
+                <div class="flex justify-between text-xs text-slate-600">
+                  <span>Số ngày chậm nộp (đã trừ 1 ngày nộp tiền):</span>
+                  <strong id="calcDaysOut" class="text-slate-900">35 ngày</strong>
+                </div>
+                <div class="flex justify-between items-baseline pt-1 border-t border-blue-200/60">
+                  <span class="text-xs font-semibold text-slate-700">Tiền chậm nộp phải nộp:</span>
+                  <span id="calcFeeOut" class="text-[18px] font-extrabold text-[#C8102E]">105.000 đ</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 5: CẨM NANG XỬ PHẠT (NĐ 125 & NĐ 310) -->
+      <section id="view-penalties" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-[18px] font-bold text-slate-800">Cẩm nang xử phạt vi phạm hành chính Thuế &amp; Hóa đơn</h2>
+                <span class="text-[11px] font-bold bg-red-50 text-[#C8102E] px-2.5 py-0.5 rounded-full">NĐ 125/2020/NĐ-CP &amp; NĐ 310</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Tra cứu nhanh khung tiền phạt, mức phạt trung bình đối với tổ chức và cá nhân / hộ kinh doanh</p>
+            </div>
+            <input id="penaltySearchInput" oninput="renderPenaltiesList()" type="text" placeholder="Lọc hành vi vi phạm (vd: chậm nộp tờ khai, hóa đơn...)" class="text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 w-full sm:w-72 focus:bg-white focus:border-blue-400 focus:outline-none" />
+          </div>
+          <div id="penaltiesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+        </div>
+      </section>
+
+      <!-- VIEW 6: TIN MỚI CẬP NHẬT -->
+      <section id="view-news" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-[18px] font-bold text-slate-800">Tin mới cập nhật ngành Thuế</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Thông báo điều hành, nâng cấp ứng dụng TMS/eTax và chính sách thuế mới ban hành</p>
+            </div>
+            <span id="lastUpdatedTime" class="text-xs text-slate-400">Cập nhật lúc 07:15 · 25/11/2026</span>
+          </div>
+          <div id="newsFeedList" class="divide-y divide-slate-100"></div>
+        </div>
+      </section>
+
+      <!-- VIEW 7: TRA CỨU RỦI RO HÓA ĐƠN -->
+      <section id="view-risk" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm max-w-3xl">
+          <h2 class="text-[18px] font-bold text-slate-800 mb-1">Tra cứu nhanh cảnh báo rủi ro Hóa đơn điện tử</h2>
+          <p class="text-xs text-slate-500 mb-4">Kiểm tra tình trạng hoạt động của người nộp thuế và dấu hiệu rủi ro hóa đơn theo danh sách cảnh báo cơ quan Thuế</p>
+
+          <div class="flex flex-col sm:flex-row gap-2.5 mb-4">
+            <input id="mstRiskInput" type="text" placeholder="Nhập Mã số thuế cần tra cứu (vd: 1800123456 hoặc 1801999888)..." class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-[13.5px] focus:bg-white focus:border-blue-400 focus:outline-none" />
+            <button onclick="checkInvoiceRisk()" class="bg-[#1A365D] hover:bg-[#102A43] text-white font-semibold text-[13.5px] px-5 py-2.5 rounded-xl transition cursor-pointer">
+              Kiểm tra rủi ro
+            </button>
+          </div>
+
+          <div id="riskCheckResult" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 text-[13px] text-slate-600">
+            Nhập mã số thuế 10 số hoặc 13 số để tra cứu trạng thái người nộp thuế (NNT đang hoạt động, NNT ngừng hoạt động nhưng chưa hoàn thành thủ tục chấm dứt hiệu lực MST, hoặc thuộc diện cảnh báo rủi ro cao về hóa đơn).
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 8: TRAO ĐỔI NỘI BỘ & TRỢ LÝ AI NGÀNH THUẾ -->
+      <section id="view-chat" class="view-section hidden space-y-4 animate-fadeIn">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          
+          <!-- Left Column: Online Officials & AI Capabilities -->
+          <div class="lg:col-span-4 space-y-4">
+            <!-- Current User Profile Card -->
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm">
+              <div class="flex items-center justify-between mb-2.5">
+                <h3 class="text-[14px] font-bold text-slate-800 flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse-dot"></span>
+                  Thông tin công chức tham gia
+                </h3>
+                <span id="syncStatusBadge" class="text-[10.5px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Đồng bộ trực tuyến</span>
+              </div>
+              <div class="space-y-2.5 text-[13px]">
+                <div>
+                  <label class="block text-[11.5px] font-semibold text-slate-500 mb-1">Chọn nhanh hoặc nhập họ tên công chức</label>
+                  <select id="presetOfficialSelect" onchange="applyPresetOfficial(this.value)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-medium focus:bg-white focus:border-blue-400 focus:outline-none mb-2">
+                    <option value="Nguyễn Thanh Nghị|Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ">Nguyễn Thanh Nghị (Tổ QL, hỗ trợ CN, HKD)</option>
+                    <option value="Nguyễn Thị Vân Anh|Công chức Thuế cơ sở 5 TP Cần Thơ">Nguyễn Thị Vân Anh (Thuế cơ sở 5 TP Cần Thơ)</option>
+                    <option value="Trần Thị Thu Hiền|Công chức Thuế cơ sở 5 TP Cần Thơ">Trần Thị Thu Hiền (Thuế cơ sở 5 TP Cần Thơ)</option>
+                    <option value="Lê Thị Anh Thuy|Công chức Thuế cơ sở 5 TP Cần Thơ">Lê Thị Anh Thuy (Thuế cơ sở 5 TP Cần Thơ)</option>
+                    <option value="CUSTOM">-- Tự nhập tên &amp; đơn vị khác --</option>
+                  </select>
+                  <div class="grid grid-cols-1 gap-2">
+                    <input id="chatUserNameInput" type="text" value="Nguyễn Thanh Nghị" placeholder="Họ và tên công chức..." onchange="saveUserIdentity()" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-[13px] font-semibold text-slate-800 focus:border-blue-400 focus:outline-none" />
+                    <input id="chatUserUnitInput" type="text" value="Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ" placeholder="Tổ nghiệp vụ / Đơn vị..." onchange="saveUserIdentity()" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-[12px] text-slate-600 focus:border-blue-400 focus:outline-none" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI Assistant Guide Card -->
+            <div class="bg-gradient-to-br from-[#1E3A6D] to-[#102A43] text-white rounded-2xl p-4 shadow-sm space-y-3">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-400 text-[#1A365D] flex items-center justify-center font-extrabold text-base shrink-0 shadow">
+                  AI
+                </div>
+                <div>
+                  <h3 class="text-[14.5px] font-bold">Trợ lý AI Nghiệp vụ Thuế</h3>
+                  <p class="text-[11.5px] text-blue-200">Hỗ trợ tra cứu &amp; giải đáp ngay trong phòng chat</p>
+                </div>
+              </div>
+              <p class="text-[12.5px] text-blue-100 leading-relaxed">
+                Gõ <code class="bg-white/15 text-amber-300 font-bold px-1.5 py-0.5 rounded">@AI</code> ở đầu câu hỏi (hoặc bật chế độ <strong>Hỏi AI</strong>) để Trợ lý AI giải đáp ngay trong cuộc trò chuyện chung cho mọi người cùng xem.
+              </p>
+              <div class="space-y-1.5 pt-1">
+                <p class="text-[11px] font-bold uppercase tracking-wider text-blue-300">Gợi ý câu hỏi nhanh cho AI:</p>
+                <button onclick="sendQuickPromptToAI('@AI Mức phạt chậm nộp hồ sơ khai thuế quá 35 ngày theo Nghị định 125 và NĐ 310 là bao nhiêu?')" class="w-full text-left text-[12px] bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl transition cursor-pointer">
+                  • Mức phạt chậm nộp tờ khai quá 35 ngày (NĐ 125 &amp; 310)?
+                </button>
+                <button onclick="sendQuickPromptToAI('@AI Ngưỡng doanh thu chịu thuế GTGT, TNCN đối với hộ kinh doanh từ năm 2026 là bao nhiêu?')" class="w-full text-left text-[12px] bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl transition cursor-pointer">
+                  • Ngưỡng doanh thu chịu thuế HKD từ 2026?
+                </button>
+                <button onclick="sendQuickPromptToAI('@AI Cách tính tiền chậm nộp 0,03%/ngày và nguyên tắc trừ ngày nộp tiền vào NSNN?')" class="w-full text-left text-[12px] bg-white/10 hover:bg-white/20 px-3 py-2 rounded-xl transition cursor-pointer">
+                  • Cách tính tiền chậm nộp 0,03%/ngày?
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Main Group Chat & AI Room -->
+          <div class="lg:col-span-8 bg-white border border-slate-200/80 rounded-2xl shadow-sm flex flex-col h-[600px] overflow-hidden">
+            <!-- Chat Header -->
+            <div class="px-4 py-3 border-b border-slate-200 bg-slate-50/80 flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold shadow-sm">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="text-[15px] font-bold text-slate-800">Kênh Trao đổi Nghiệp vụ Nội bộ &amp; Trợ lý AI</h2>
+                  <p class="text-[11.5px] text-slate-500">Thảo luận trực tuyến giữa các công chức và hỏi đáp pháp luật thuế cùng AI</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="clearChatHistoryConfirm()" title="Xóa lịch sử trên máy này" class="text-[11.5px] text-slate-500 hover:text-red-600 px-2.5 py-1 rounded-lg hover:bg-slate-100 transition cursor-pointer">
+                  Làm mới khung chat
+                </button>
+              </div>
+            </div>
+
+            <!-- Messages Stream -->
+            <div id="mainChatMessages" class="flex-1 p-4 overflow-y-auto space-y-3.5 bg-[#F8FAFC] custom-scroll"></div>
+
+            <!-- AI Typing Indicator -->
+            <div id="aiTypingBar" class="hidden px-4 py-1.5 bg-blue-50/80 border-t border-blue-100 text-[12px] text-blue-700 font-medium flex items-center gap-2">
+              <span class="inline-flex gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-bounce"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-bounce" style="animation-delay:0.15s"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-bounce" style="animation-delay:0.3s"></span>
+              </span>
+              <span>Trợ lý AI Ngành Thuế đang tra cứu văn bản và soạn câu trả lời...</span>
+            </div>
+
+            <!-- Input Composer -->
+            <div class="p-3 bg-white border-t border-slate-200">
+              <div class="flex items-center gap-2 mb-2">
+                <button id="modeGroupBtn" onclick="setChatTargetMode('group')" class="text-[11.5px] font-bold px-3 py-1 rounded-full bg-blue-600 text-white transition cursor-pointer">
+                  💬 Gửi mọi người
+                </button>
+                <button id="modeAiBtn" onclick="setChatTargetMode('ai')" class="text-[11.5px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-800 transition cursor-pointer">
+                  🤖 Hỏi Trợ lý AI (@AI)
+                </button>
+                <span class="text-[11px] text-slate-400 hidden sm:inline">Nhấn Enter để gửi</span>
+              </div>
+              <form onsubmit="handleSendMessage(event, 'main')" class="flex items-center gap-2">
+                <input
+                  id="mainChatInput"
+                  type="text"
+                  placeholder="Nhập nội dung trao đổi với đồng nghiệp hoặc gõ @AI để hỏi trợ lý thuế..."
+                  class="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-[13.5px] text-slate-800 focus:bg-white focus:border-blue-400 focus:outline-none"
+                />
+                <button type="submit" class="bg-[#1D4ED8] hover:bg-blue-700 text-white font-semibold text-[13.5px] px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-1.5 cursor-pointer shrink-0">
+                  <span>Gửi</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- MAIN PAGE COPYRIGHT FOOTER -->
+      <footer class="pt-2 pb-4 text-center border-t border-slate-200/70">
+        <p class="text-[12px] text-slate-500">
+          © 2026 <strong class="text-slate-700">ỨNG DỤNG NGÀNH THUẾ</strong> — Bản quyền thuộc về <strong class="text-[#1A365D]">Công chức Nguyễn Thanh Nghị</strong> (Tổ quản lý, hỗ trợ cá nhân, hộ kinh doanh – Thuế cơ sở 5 thành phố Cần Thơ).
+        </p>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- FLOATING QUICK CHAT & AI WIDGET (Bottom Right) -->
+  <div id="floatingChatWidget" class="fixed bottom-4 right-4 z-40">
+    <!-- Collapsed Pill Button -->
+    <button id="floatingChatToggleBtn" onclick="toggleFloatingChat(true)" class="flex items-center gap-2.5 bg-[#1A365D] hover:bg-[#102A43] text-white px-4 py-2.5 rounded-full shadow-lg border border-blue-400/30 transition cursor-pointer">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+      </span>
+      <span class="text-[13px] font-bold">Trao đổi &amp; Trợ lý AI</span>
+      <span id="floatingUnreadBadge" class="hidden bg-red-500 text-white text-[10.5px] font-extrabold px-1.5 py-0.2 rounded-full">1</span>
+    </button>
+
+    <!-- Expanded Mini Chat Window -->
+    <div id="floatingChatBox" class="hidden w-[340px] sm:w-[380px] bg-white border border-slate-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-fadeIn">
+      <div class="bg-gradient-to-r from-[#1A365D] to-[#1E40AF] text-white px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-dot"></span>
+          <div>
+            <h4 class="text-[13.5px] font-bold leading-tight">Trao đổi Nội bộ &amp; Trợ lý AI</h4>
+            <p class="text-[10.5px] text-blue-200">Gõ @AI để hỏi nhanh nghiệp vụ thuế</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button onclick="toggleFloatingChat(false); navigateTo('chat');" title="Mở rộng toàn màn hình" class="p-1.5 hover:bg-white/15 rounded-lg text-blue-100 hover:text-white transition cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+            </svg>
+          </button>
+          <button onclick="toggleFloatingChat(false)" title="Thu gọn" class="p-1.5 hover:bg-white/15 rounded-lg text-blue-100 hover:text-white transition cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="miniChatMessages" class="h-[310px] p-3 overflow-y-auto space-y-2.5 bg-[#F8FAFC] custom-scroll"></div>
+
+      <div id="miniAiTyping" class="hidden px-3 py-1 bg-blue-50 text-[11px] text-blue-700 font-medium">
+        🤖 Trợ lý AI đang trả lời...
+      </div>
+
+      <form onsubmit="handleSendMessage(event, 'mini')" class="p-2.5 bg-white border-t border-slate-200 flex items-center gap-1.5">
+        <button type="button" onclick="insertAtAiPrefix('miniChatInput')" title="Hỏi Trợ lý AI" class="px-2 py-1.5 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 text-[11px] font-extrabold shrink-0 cursor-pointer">
+          @AI
+        </button>
+        <input id="miniChatInput" type="text" placeholder="Nhắn đồng nghiệp hoặc @AI..." class="flex-1 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-[12.5px] focus:bg-white focus:border-blue-400 focus:outline-none" />
+        <button type="submit" class="bg-[#1D4ED8] hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl text-[12px] font-semibold shrink-0 cursor-pointer">
+          Gửi
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- DOCUMENT DETAIL MODAL -->
+  <div id="docDetailModal" class="fixed inset-0 bg-slate-900/50 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 animate-fadeIn">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-100 pb-3">
+        <div>
+          <span id="modalDocBadge" class="text-[11px] font-bold bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-full">Đang có hiệu lực</span>
+          <h3 id="modalDocCode" class="text-[19px] font-extrabold text-slate-900 mt-1.5">48/2024/QH15</h3>
+        </div>
+        <button onclick="closeDocModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer">✕</button>
+      </div>
+      <div class="py-4 space-y-3 text-[13.5px]">
+        <p id="modalDocTitle" class="font-bold text-slate-800 text-[15px]"></p>
+        <div class="grid grid-cols-2 gap-3 bg-slate-50 p-3 rounded-xl text-xs">
+          <div><span class="text-slate-400">Cơ quan ban hành:</span> <strong id="modalDocIssuer" class="text-slate-700">Quốc hội</strong></div>
+          <div><span class="text-slate-400">Ngày hiệu lực:</span> <strong id="modalDocEffective" class="text-slate-700">01/07/2025</strong></div>
+        </div>
+        <div>
+          <p class="text-xs font-bold uppercase text-slate-400 mb-1">Tóm tắt điểm mới &amp; nội dung trọng tâm</p>
+          <p id="modalDocSummary" class="text-slate-600 leading-relaxed"></p>
+        </div>
+      </div>
+      <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+        <button onclick="askAiAboutCurrentDoc()" class="bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold px-3.5 py-2 rounded-xl cursor-pointer">
+          🤖 Hỏi Trợ lý AI về văn bản này
+        </button>
+        <button onclick="closeDocModal()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">
+          Đóng cửa sổ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING GUIDE MODAL -->
+  <div id="guideModal" class="fixed inset-0 bg-slate-900/50 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 animate-fadeIn">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-[17px] font-bold text-slate-800">Hướng dẫn sử dụng ỨNG DỤNG NGÀNH THUẾ</h3>
+        <button onclick="closeGuideModal()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer">✕</button>
+      </div>
+      <div class="py-4 space-y-3 text-[13.5px] text-slate-600 leading-relaxed">
+        <p><strong class="text-slate-800">1. Tìm kiếm thông minh không dấu:</strong> Gõ số hiệu (vd: <code>181</code>, <code>125</code>, <code>48/2024</code>) hoặc từ khóa tiếng Việt không dấu vào thanh tìm kiếm phía trên để lọc tức thì.</p>
+        <p><strong class="text-slate-800">2. Dòng thời gian hiệu lực:</strong> Bấm vào từng mốc ngày trên thanh thời gian để xem các văn bản bắt đầu có hiệu lực.</p>
+        <p><strong class="text-slate-800">3. Trao đổi nội bộ &amp; Trợ lý AI:</strong> Bấm mục <strong>Trao đổi &amp; Trợ lý AI</strong> bên thanh trái hoặc khung chat góc dưới phải để nhắn tin trực tiếp với đồng nghiệp và gõ <code>@AI</code> để nhờ Trợ lý AI giải đáp văn bản thuế.</p>
+        <p><strong class="text-slate-800">4. Quản trị &amp; Cập nhật trực tiếp (Admin):</strong> Bấm nút <strong>Quản trị</strong> trên thanh công cụ (mật khẩu mặc định: <code>nghi2026</code>) để thêm văn bản mới, tin mới hoặc lịch hạn nộp thuế — mọi thay đổi sẽ tự động đồng bộ tức thì sang máy toàn bộ đồng nghiệp.</p>
+      </div>
+      <div class="pt-3 border-t border-slate-100 flex justify-end">
+        <button onclick="closeGuideModal()" class="bg-[#1D4ED8] hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Đã hiểu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PORTAL MODAL (DIRECT LIVE DATA UPDATE FOR ALL USERS) -->
+  <div id="adminModal" class="fixed inset-0 bg-slate-900/60 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden animate-fadeIn flex flex-col max-h-[90vh]">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-[#1A365D] to-[#102A43] text-white px-5 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-lg bg-amber-400 text-[#1A365D] flex items-center justify-center font-extrabold text-sm">QT</span>
+          <div>
+            <h3 class="text-[15.5px] font-bold">Bảng Quản Trị &amp; Cập Nhật Dữ Liệu Trực Tuyến</h3>
+            <p class="text-[11px] text-blue-200">Mọi cập nhật tại đây sẽ đồng bộ tức thì sang màn hình toàn bộ đồng nghiệp</p>
+          </div>
+        </div>
+        <button onclick="closeAdminModal()" class="p-1.5 rounded-lg text-blue-200 hover:text-white hover:bg-white/10 cursor-pointer">✕</button>
+      </div>
+
+      <!-- Login Gate -->
+      <div id="adminLoginView" class="p-6 space-y-4">
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-[12.5px] text-amber-900">
+          Khu vực dành riêng cho Quản trị viên (<strong>Công chức Nguyễn Thanh Nghị</strong>). Nhập mật khẩu quản trị để thêm văn bản mới, đăng tin mới hoặc chỉnh sửa hạn nộp thuế.
+        </div>
+        <form onsubmit="handleAdminLogin(event)" class="space-y-3 max-w-sm mx-auto py-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Mật khẩu quản trị</label>
+            <input id="adminPasswordInput" type="password" placeholder="Nhập mật khẩu (mặc định: nghi2026)..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-[13.5px] focus:bg-white focus:border-blue-500 focus:outline-none" required />
+            <p id="adminLoginError" class="hidden text-xs text-red-600 font-semibold mt-1">Mật khẩu chưa chính xác, vui lòng thử lại!</p>
+          </div>
+          <button type="submit" class="w-full py-2.5 bg-[#1D4ED8] hover:bg-blue-700 text-white font-bold text-[13.5px] rounded-xl shadow-sm transition cursor-pointer">
+            Đăng nhập Quản trị
+          </button>
+        </form>
+      </div>
+
+      <!-- Admin Dashboard Tabs (Shown after login) -->
+      <div id="adminDashboardView" class="hidden flex-1 flex flex-col overflow-hidden">
+        <!-- Sub-navigation -->
+        <div class="px-5 pt-3 border-b border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex flex-wrap gap-1.5">
+            <button onclick="switchAdminTab('doc')" data-admintab="doc" class="admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl bg-white text-blue-700 border border-b-0 border-slate-200 cursor-pointer">
+              + Thêm Văn bản mới
+            </button>
+            <button onclick="switchAdminTab('news')" data-admintab="news" class="admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer">
+              + Đăng Tin mới
+            </button>
+            <button onclick="switchAdminTab('deadline')" data-admintab="deadline" class="admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer">
+              📅 Cập nhật Hạn nộp thuế
+            </button>
+            <button onclick="switchAdminTab('password')" data-admintab="password" class="admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer">
+              🔑 Đổi mật khẩu
+            </button>
+          </div>
+          <button onclick="logoutAdmin()" class="text-[11.5px] font-semibold text-red-600 hover:underline pb-1.5 cursor-pointer">Đăng xuất</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="p-5 overflow-y-auto flex-1 space-y-4 custom-scroll text-[13px]">
+          
+          <!-- TAB 1: THÊM VĂN BẢN MỚI -->
+          <div id="adminTab-doc" class="admin-tab-pane space-y-4">
+            <form onsubmit="handleAdminAddDoc(event)" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3">
+              <h4 class="font-bold text-slate-800 text-[14px]">Thêm văn bản pháp luật thuế mới</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Số hiệu văn bản *</label>
+                  <input id="admDocCode" type="text" placeholder="Vd: 15/2026/TT-BTC" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Lĩnh vực thuế *</label>
+                  <select id="admDocDomain" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none">
+                    <option value="GTGT">Thuế Giá trị gia tăng (GTGT)</option>
+                    <option value="TNDN">Thuế Thu nhập doanh nghiệp (TNDN)</option>
+                    <option value="TNCN">Thuế TNCN &amp; Hộ kinh doanh</option>
+                    <option value="QLT">Quản lý thuế &amp; Hóa đơn</option>
+                    <option value="XUPHAT">Xử phạt vi phạm hành chính</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày hiệu lực *</label>
+                  <input id="admDocEffective" type="text" placeholder="Vd: 01/12/2026" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Tên / Trích yếu văn bản *</label>
+                  <input id="admDocTitle" type="text" placeholder="Nhập trích yếu văn bản..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Cơ quan ban hành</label>
+                  <input id="admDocIssuer" type="text" value="Bộ Tài chính" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Tóm tắt điểm mới trọng tâm *</label>
+                <textarea id="admDocSummary" rows="2" placeholder="Nhập tóm tắt nội dung áp dụng cho công chức tra cứu..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none"></textarea>
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="bg-[#1D4ED8] hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
+                  Lưu &amp; Đồng bộ văn bản mới
+                </button>
+              </div>
+            </form>
+
+            <div>
+              <h4 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2">Danh sách văn bản đã thêm từ Quản trị (<span id="customDocsCount">0</span>)</h4>
+              <div id="adminCustomDocsList" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <!-- TAB 2: ĐĂNG TIN MỚI CẬP NHẬT -->
+          <div id="adminTab-news" class="admin-tab-pane hidden space-y-4">
+            <form onsubmit="handleAdminAddNews(event)" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3">
+              <h4 class="font-bold text-slate-800 text-[14px]">Đăng thông báo / Tin mới cập nhật</h4>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Nhãn phân loại</label>
+                  <select id="admNewsTag" class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none">
+                    <option value="Chính sách mới">Chính sách mới</option>
+                    <option value="Chỉ đạo điều hành">Chỉ đạo điều hành</option>
+                    <option value="Hệ thống TMS/eTax">Hệ thống TMS/eTax</option>
+                    <option value="Thông báo nội bộ">Thông báo nội bộ</option>
+                  </select>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Tiêu đề tin mới *</label>
+                  <input id="admNewsTitle" type="text" placeholder="Nhập tiêu đề thông báo..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Nội dung chi tiết *</label>
+                <textarea id="admNewsDesc" rows="2" placeholder="Nhập nội dung chi tiết thông báo..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none"></textarea>
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="bg-[#EF533F] hover:bg-[#DC3D29] text-white font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
+                  Đăng tin &amp; Đồng bộ ngay
+                </button>
+              </div>
+            </form>
+
+            <div>
+              <h4 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2">Tin đã đăng từ Quản trị (<span id="customNewsCount">0</span>)</h4>
+              <div id="adminCustomNewsList" class="space-y-2"></div>
+            </div>
+          </div>
+
+          <!-- TAB 3: CẬP NHẬT HẠN NỘP THUẾ GẦN NHẤT -->
+          <div id="adminTab-deadline" class="admin-tab-pane hidden space-y-4">
+            <form onsubmit="handleAdminUpdateDeadline(event)" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3">
+              <h4 class="font-bold text-slate-800 text-[14px]">Cập nhật thẻ nhắc "Hạn gần nhất" trên Trang chủ</h4>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Nội dung kỳ khai, nộp thuế *</label>
+                <input id="admDeadlineTitle" type="text" value="Khai, nộp thuế GTGT và TNCN khấu trừ tháng 11/2026" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày hết hạn (dd/mm/yyyy) *</label>
+                  <input id="admDeadlineDate" type="text" value="21/12/2026" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Nhãn đếm ngược hiển thị *</label>
+                  <input id="admDeadlineCountdown" type="text" value="còn 26 ngày" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="bg-[#1A365D] hover:bg-[#102A43] text-white font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
+                  Cập nhật lịch hạn nộp
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- TAB 4: ĐỔI MẬT KHẨU QUẢN TRỊ -->
+          <div id="adminTab-password" class="admin-tab-pane hidden space-y-4">
+            <form onsubmit="handleAdminChangePassword(event)" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3 max-w-md">
+              <h4 class="font-bold text-slate-800 text-[14px]">Đổi mật khẩu Quản trị viên</h4>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Mật khẩu mới *</label>
+                <input id="admNewPass1" type="password" placeholder="Nhập mật khẩu mới..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Xác nhận mật khẩu mới *</label>
+                <input id="admNewPass2" type="password" placeholder="Nhập lại mật khẩu mới..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+              </div>
+              <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
+                Lưu mật khẩu mới
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-16 right-5 z-50 hidden bg-slate-900 text-white text-[13px] font-medium px-4 py-2.5 rounded-xl shadow-lg items-center gap-2">
+    <span class="text-emerald-400">✓</span>
+    <span id="toastMessage">Đã cập nhật dữ liệu mới nhất!</span>
+  </div>
+
+  <!-- APPLICATION SCRIPT (Data + Search + Hash Routing + Realtime Chat & AI + Live Admin Sync) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, setDoc, deleteDoc, doc, query, orderBy, limit, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // 1. BASE LEGAL DOCUMENTS DATABASE
+    const BASE_DOCUMENTS = [
+      { code: '48/2024/QH15', title: 'Luật Thuế giá trị gia tăng', domain: 'GTGT', domainLabel: 'Thuế GTGT', issuer: 'Quốc hội', effective: '01/07/2025', status: 'active', summary: 'Quy định đối tượng chịu thuế, không chịu thuế, nâng ngưỡng doanh thu không chịu thuế GTGT của hộ, cá nhân kinh doanh lên trên 200 triệu đồng/năm từ 01/01/2026, điều chỉnh thuế suất 5% và 10%, chặt chẽ điều kiện khấu trừ thuế GTGT đầu vào.' },
+      { code: '181/2025/NĐ-CP', title: 'Quy định chi tiết thi hành một số điều của Luật Thuế giá trị gia tăng', domain: 'GTGT', domainLabel: 'Thuế GTGT', issuer: 'Chính phủ', effective: '01/07/2025', status: 'active', summary: 'Hướng dẫn chi tiết giá tính thuế, thời điểm xác định thuế GTGT, chứng từ thanh toán không dùng tiền mặt đối với hàng hóa, dịch vụ mua vào từ 5 triệu đồng trở lên và hồ sơ hoàn thuế GTGT.' },
+      { code: '69/2025/TT-BTC', title: 'Quy định chi tiết Luật Thuế GTGT và hướng dẫn Nghị định 181/2025/NĐ-CP', domain: 'GTGT', domainLabel: 'Thuế GTGT', issuer: 'Bộ Tài chính', effective: '01/07/2025', status: 'active', summary: 'Hướng dẫn mẫu biểu kê khai, xác định tỷ lệ % tính thuế GTGT theo phương pháp trực tiếp và hồ sơ chứng minh đối tượng không chịu thuế GTGT.' },
+      { code: '67/2025/QH15', title: 'Luật Thuế thu nhập doanh nghiệp', domain: 'TNDN', domainLabel: 'Thuế TNDN', issuer: 'Quốc hội', effective: '01/10/2025', status: 'active', summary: 'Bổ sung quy định thuế suất ưu đãi 15% và 17% cho doanh nghiệp nhỏ và siêu nhỏ, mở rộng phạm vi thu nhập chịu thuế của nhà cung cấp nước ngoài kinh doanh thương mại điện tử.' },
+      { code: '320/2025/NĐ-CP', title: 'Quy định chi tiết thi hành một số điều của Luật Thuế thu nhập doanh nghiệp', domain: 'TNDN', domainLabel: 'Thuế TNDN', issuer: 'Chính phủ', effective: '15/11/2026', status: 'active', summary: 'Hướng dẫn xác định doanh thu, chi phí được trừ và không được trừ khi xác định thu nhập chịu thuế TNDN, ưu đãi đầu tư mở rộng và chuyển lỗ.' },
+      { code: '38/2019/QH14', title: 'Luật Quản lý thuế', domain: 'QLT', domainLabel: 'Quản lý thuế', issuer: 'Quốc hội', effective: '01/07/2020', status: 'active', summary: 'Quy định toàn diện về đăng ký thuế, khai thuế, tính thuế, nộp thuế, hoàn thuế, khoanh nợ, xóa nợ, cưỡng chế thi hành quyết định hành chính thuế và hóa đơn điện tử.' },
+      { code: '56/2024/QH15', title: 'Luật sửa đổi, bổ sung một số điều của Luật Chứng khoán, Luật Kế toán, Luật Quản lý thuế...', domain: 'QLT', domainLabel: 'Quản lý thuế', issuer: 'Quốc hội', effective: '01/01/2025', status: 'active', summary: 'Sửa đổi quy định về trách nhiệm khấu trừ, nộp thuế thay của tổ chức quản lý sàn thương mại điện tử, tạm hoãn xuất cảnh đối với cá nhân nợ thuế quá hạn.' },
+      { code: '125/2020/NĐ-CP', title: 'Quy định xử phạt vi phạm hành chính về thuế, hóa đơn', domain: 'XUPHAT', domainLabel: 'Xử phạt VPHC', issuer: 'Chính phủ', effective: '05/12/2020', status: 'active', summary: 'Khung xử phạt đối với hành vi chậm nộp hồ sơ đăng ký thuế, chậm nộp tờ khai thuế, khai sai dẫn đến thiếu số tiền thuế phải nộp, trốn thuế và vi phạm quy định về lập, sử dụng hóa đơn.' },
+      { code: '310/2025/NĐ-CP', title: 'Nghị định sửa đổi, bổ sung một số điều của Nghị định 125/2020/NĐ-CP về xử phạt thuế, hóa đơn', domain: 'XUPHAT', domainLabel: 'Xử phạt VPHC', issuer: 'Chính phủ', effective: '01/01/2026', status: 'active', summary: 'Cập nhật tình tiết giảm nhẹ, nguyên tắc áp dụng mức phạt đối với hộ kinh doanh, cá nhân kinh doanh và xử phạt vi phạm liên quan đến hóa đơn điện tử khởi tạo từ máy tính tiền.' },
+      { code: '40/2021/TT-BTC', title: 'Hướng dẫn thuế GTGT, thuế TNCN và quản lý thuế đối với hộ kinh doanh, cá nhân kinh doanh', domain: 'TNCN', domainLabel: 'Thuế TNCN & HKD', issuer: 'Bộ Tài chính', effective: '01/08/2021', status: 'active', summary: 'Quy định phương pháp tính thuế đối với hộ khoán, hộ kê khai, cá nhân cho thuê tài sản và trách nhiệm khai thuế thay, nộp thuế thay.' },
+      { code: '80/2021/TT-BTC', title: 'Hướng dẫn thi hành một số điều của Luật Quản lý thuế và Nghị định 126/2020/NĐ-CP', domain: 'QLT', domainLabel: 'Quản lý thuế', issuer: 'Bộ Tài chính', effective: '01/01/2022', status: 'active', summary: 'Ban hành hệ thống mẫu biểu hồ sơ khai thuế, thông báo nộp thuế, quyết định cưỡng chế và quy trình xử lý hồ sơ miễn, giảm, hoàn thuế.' },
+      { code: '78/2021/TT-BTC', title: 'Hướng dẫn thực hiện một số điều của Luật Quản lý thuế và Nghị định 123/2020/NĐ-CP về hóa đơn, chứng từ', domain: 'QLT', domainLabel: 'Hóa đơn điện tử', issuer: 'Bộ Tài chính', effective: '01/07/2022', status: 'active', summary: 'Hướng dẫn ủy nhiệm lập hóa đơn điện tử, xử lý hóa đơn điện tử có sai sót và triển khai hóa đơn điện tử khởi tạo từ máy tính tiền có kết nối chuyển dữ liệu với cơ quan thuế.' },
+      { code: '13/2013/QH13', title: 'Luật Thuế giá trị gia tăng (Văn bản hết hiệu lực từ 01/07/2025)', domain: 'GTGT', domainLabel: 'Thuế GTGT', issuer: 'Quốc hội', effective: '01/01/2014', status: 'expired', summary: 'Văn bản đối chiếu lịch sử trước khi Luật Thuế GTGT số 48/2024/QH15 có hiệu lực thi hành từ ngày 01/07/2025.' },
+      { code: '14/2008/QH12', title: 'Luật Thuế thu nhập doanh nghiệp (Văn bản hết hiệu lực từ 01/10/2025)', domain: 'TNDN', domainLabel: 'Thuế TNDN', issuer: 'Quốc hội', effective: '01/01/2009', status: 'expired', summary: 'Văn bản đối chiếu lịch sử trước khi Luật Thuế TNDN số 67/2025/QH15 có hiệu lực thi hành.' }
+    ];
+
+    const PENALTIES_DATA = [
+      { code: 'Điều 10 - NĐ 125', title: 'Chậm nộp hồ sơ đăng ký thuế, thông báo thay đổi thông tin ĐKT', fineRange: 'Cảnh cáo hoặc 1.000.000đ – 10.000.000đ', avgFine: 'Tổ chức: 3.500.000đ | Cá nhân/HKD: 1.750.000đ', detail: 'Quá hạn từ 01-10 ngày có tình tiết giảm nhẹ: Cảnh cáo. Quá hạn từ 31-90 ngày: phạt tiền từ 3.000.000đ đến 6.000.000đ (tổ chức).' },
+      { code: 'Điều 13 - NĐ 125', title: 'Chậm nộp hồ sơ khai thuế quá thời hạn quy định', fineRange: 'Cảnh cáo hoặc 2.000.000đ – 25.000.000đ', avgFine: 'Quá 31-60 ngày: 6.500.000đ (TC) / 3.250.000đ (CN)', detail: 'Quá hạn 01-05 ngày có tình tiết giảm nhẹ: Cảnh cáo. Quá hạn 01-30 ngày: 2-5 triệu. Quá hạn 31-60 ngày: 5-8 triệu. Quá hạn 61-90 ngày: 8-15 triệu. Quá 90 ngày không phát sinh thuế: 8-15 triệu.' },
+      { code: 'Điều 16 - NĐ 125', title: 'Khai sai dẫn đến thiếu số tiền thuế phải nộp hoặc tăng số thuế được hoàn', fineRange: 'Phạt 20% số tiền thuế khai thiếu', avgFine: '20% x Số thuế thiếu + Tiền chậm nộp 0,03%/ngày', detail: 'Áp dụng khi người nộp thuế đã phản ánh đầy đủ nghiệp vụ kinh tế trên sổ kế toán, hóa đơn hợp pháp nhưng kê khai sai căn cứ tính thuế.' },
+      { code: 'Điều 17 - NĐ 125', title: 'Hành vi trốn thuế (không nộp hồ sơ khai thuế, không xuất hóa đơn...)', fineRange: 'Phạt từ 1 lần đến 3 lần số tiền thuế trốn', avgFine: 'Không tình tiết tăng nặng/giảm nhẹ: 1,5 lần số thuế trốn', detail: 'Phạt 1 lần nếu có từ 1 tình tiết giảm nhẹ trở lên; 1,5 lần nếu không có tình tiết tăng nặng/giảm nhẹ; 2 lần nếu có 1 tình tiết tăng nặng.' },
+      { code: 'Điều 24 - NĐ 125 & NĐ 310', title: 'Vi phạm quy định về lập hóa đơn khi bán hàng hóa, cung cấp dịch vụ', fineRange: 'Cảnh cáo hoặc 500.000đ – 20.000.000đ', avgFine: 'Lập sai thời điểm: 4.000.000đ (TC) | Không lập HĐ: 15.000.000đ', detail: 'Lập hóa đơn không đúng thời điểm nhưng không dẫn đến chậm thực hiện nghĩa vụ thuế và có tình tiết giảm nhẹ thì phạt cảnh cáo.' },
+      { code: 'Điều 28 - NĐ 125', title: 'Sử dụng hóa đơn không hợp pháp hoặc sử dụng không hợp pháp hóa đơn', fineRange: '20.000.000đ – 50.000.000đ', avgFine: 'Tổ chức: 35.000.000đ | Cá nhân/HKD: 17.500.000đ', detail: 'Buộc hủy hóa đơn đã sử dụng; trường hợp sử dụng để trốn thuế thì xử phạt theo Điều 17 về hành vi trốn thuế.' }
+    ];
+
+    const BASE_NEWS_DATA = [
+      { date: '25/11/2026', tag: 'Chính sách mới', title: 'Triển khai Nghị định 320/2025/NĐ-CP hướng dẫn chi tiết Luật Thuế TNDN số 67/2025/QH15', desc: 'Hệ thống văn bản đã cập nhật toàn văn Nghị định 320/2025/NĐ-CP có hiệu lực từ 15/11/2026 phục vụ công tác hướng dẫn người nộp thuế.' },
+      { date: '20/11/2026', tag: 'Chỉ đạo điều hành', title: 'Rà soát chuẩn hóa dữ liệu mã số thuế cá nhân, hộ kinh doanh theo Đề án 06', desc: 'Tăng cường đối chiếu thông tin định danh cá nhân gắn với mã số thuế hộ kinh doanh trên địa bàn quản lý.' },
+      { date: '15/11/2026', tag: 'Hệ thống TMS/eTax', title: 'Nâng cấp chức năng tra cứu hóa đơn điện tử khởi tạo từ máy tính tiền', desc: 'Bổ sung cảnh báo tự động đối với các trường hợp xuất hóa đơn vượt ngưỡng doanh thu khoán.' }
+    ];
+
+    // Dynamic state (combines base data + live synced admin data)
+    let customDocs = [];
+    let customNews = [];
+    let customDeadline = {
+      title: 'Khai, nộp thuế GTGT và TNCN khấu trừ tháng 11/2026',
+      date: '21/12/2026',
+      countdown: 'còn 26 ngày'
+    };
+
+    function getAllDocuments() {
+      return [...customDocs, ...BASE_DOCUMENTS];
+    }
+
+    function getAllNews() {
+      return [...customNews, ...BASE_NEWS_DATA];
+    }
+
+    function normalizeVi(str) {
+      if (!str) return '';
+      return str.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'D');
+    }
+
+    // 2. HASH ROUTER & NAVIGATION
+    const ROUTE_MAP = {
+      'home': 'overview',
+      'overview': 'overview',
+      'thuvien': 'library',
+      'library': 'library',
+      'hethong': 'hierarchy',
+      'hierarchy': 'hierarchy',
+      'solieu': 'quickdata',
+      'quickdata': 'quickdata',
+      'xuphat': 'penalties',
+      'penalties': 'penalties',
+      'tinmoi': 'news',
+      'news': 'news',
+      'ruiro': 'risk',
+      'risk': 'risk',
+      'chat': 'chat',
+      'traodoi': 'chat'
+    };
+
+    const VIEW_TO_HASH = {
+      'overview': '#/home',
+      'library': '#/thuvien',
+      'hierarchy': '#/hethong',
+      'quickdata': '#/solieu',
+      'penalties': '#/xuphat',
+      'news': '#/tinmoi',
+      'risk': '#/ruiro',
+      'chat': '#/chat'
+    };
+
+    let currentActiveView = 'overview';
+
+    window.navigateTo = function(viewId, filterParam = null, updateHash = true) {
+      currentActiveView = viewId;
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+      const target = document.getElementById('view-' + viewId);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        const isMatch = btn.getAttribute('data-nav') === viewId;
+        if (isMatch) {
+          btn.classList.add('bg-[#EBF3FE]', 'text-[#1D4ED8]', 'font-semibold');
+          btn.classList.remove('text-slate-600', 'font-medium');
+        } else {
+          btn.classList.remove('bg-[#EBF3FE]', 'text-[#1D4ED8]', 'font-semibold');
+          btn.classList.add('text-slate-600', 'font-medium');
+        }
+      });
+
+      if (updateHash && VIEW_TO_HASH[viewId]) {
+        try {
+          window.history.replaceState(null, '', VIEW_TO_HASH[viewId]);
+        } catch (e) {}
+      }
+
+      if (viewId === 'library') {
+        if (filterParam) document.getElementById('filterStatus').value = filterParam;
+        renderLibraryTable();
+      } else if (viewId === 'penalties') {
+        renderPenaltiesList();
+      } else if (viewId === 'news') {
+        renderNewsFeed();
+      } else if (viewId === 'chat') {
+        scrollChatToBottom('main');
+      }
+
+      toggleMobileSidebar(false);
+    };
+
+    function handleHashChange() {
+      const rawHash = (window.location.hash || '').replace(/^#\/?/, '').split('?')[0].toLowerCase();
+      const mappedView = ROUTE_MAP[rawHash] || 'overview';
+      if (!window.location.hash) {
+        try { window.history.replaceState(null, '', '#/home'); } catch (e) {}
+      }
+      navigateTo(mappedView, null, false);
+    }
+    window.addEventListener('hashchange', handleHashChange);
+
+    window.toggleMobileSidebar = function(show) {
+      const sidebar = document.getElementById('leftSidebar');
+      const backdrop = document.getElementById('sidebarBackdrop');
+      if (show) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    };
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => toggleMobileSidebar(true));
+
+    // Custom Bridge Photo Upload (saved locally)
+    window.handleBridgePhotoUpload = function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        applyCustomBridgePhoto(dataUrl);
+        try { localStorage.setItem('udnt_bridge_photo', dataUrl); } catch (err) {}
+        showToast('Đã cập nhật ảnh nền Cầu Cần Thơ sắc nét!');
+      };
+      reader.readAsDataURL(file);
+    };
+
+    function applyCustomBridgePhoto(dataUrl) {
+      const img = document.getElementById('customBridgeImg');
+      const svg = document.getElementById('defaultBridgeSvg');
+      if (dataUrl && img && svg) {
+        img.src = dataUrl;
+        img.classList.remove('hidden');
+        svg.classList.add('hidden');
+      }
+    }
+
+    // 3. GLOBAL ACCENT-INSENSITIVE SEARCH
+    const searchInput = document.getElementById('globalSearchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const searchResultsSection = document.getElementById('searchResultsSection');
+
+    searchInput.addEventListener('input', function() {
+      const q = this.value.trim();
+      clearSearchBtn.classList.toggle('hidden', q.length === 0);
+      if (q.length === 0) {
+        searchResultsSection.classList.add('hidden');
+        return;
+      }
+
+      const normQ = normalizeVi(q);
+      const allDocs = getAllDocuments();
+      const matched = allDocs.filter(doc =>
+        normalizeVi(doc.code).includes(normQ) ||
+        normalizeVi(doc.title).includes(normQ) ||
+        normalizeVi(doc.summary).includes(normQ) ||
+        normalizeVi(doc.domainLabel).includes(normQ)
+      );
+
+      document.getElementById('searchQueryLabel').textContent = q;
+      document.getElementById('searchCountBadge').textContent = `${matched.length} văn bản`;
+      const listEl = document.getElementById('searchResultsList');
+
+      if (matched.length === 0) {
+        listEl.innerHTML = `<p class="py-6 text-center text-sm text-slate-400">Không tìm thấy văn bản nào khớp với từ khóa "${q}".</p>`;
+      } else {
+        listEl.innerHTML = matched.map(d => `
+          <div onclick="openDocModal('${d.code}')" class="py-3 px-2 hover:bg-slate-50 rounded-lg cursor-pointer flex items-start justify-between gap-3 transition">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-[#1D4ED8] text-[13.5px]">${d.code}</span>
+                <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-medium">${d.domainLabel}</span>
+                <span class="text-[11px] ${d.status === 'active' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'} px-2 py-0.5 rounded font-semibold">
+                  ${d.status === 'active' ? 'Có hiệu lực' : 'Hết hiệu lực'}
+                </span>
+              </div>
+              <p class="text-[13px] font-semibold text-slate-800 mt-0.5">${d.title}</p>
+              <p class="text-xs text-slate-500 line-clamp-1 mt-0.5">${d.summary}</p>
+            </div>
+            <span class="text-xs font-semibold text-blue-600 shrink-0 mt-1">Xem →</span>
+          </div>
+        `).join('');
+      }
+      searchResultsSection.classList.remove('hidden');
+    });
+
+    clearSearchBtn.addEventListener('click', clearGlobalSearch);
+    window.clearGlobalSearch = function() {
+      searchInput.value = '';
+      clearSearchBtn.classList.add('hidden');
+      searchResultsSection.classList.add('hidden');
+    };
+
+    // 4. RENDER LIBRARY, PENALTIES, NEWS, COUNTERS & DEADLINE
+    function refreshDashboardStats() {
+      const totalCount = 57 + customDocs.length;
+      const activeCount = 44 + customDocs.filter(d => d.status === 'active').length;
+
+      document.getElementById('statTotalDocs').textContent = totalCount;
+      document.getElementById('statActiveDocs').textContent = activeCount;
+      document.getElementById('sidebarDocCount').textContent = totalCount;
+      document.getElementById('timelineActiveText').textContent = activeCount;
+
+      document.getElementById('deadlineTitleText').textContent = customDeadline.title;
+      document.getElementById('deadlineDateText').textContent = customDeadline.date;
+      document.getElementById('deadlineCountdownText').textContent = customDeadline.countdown;
+
+      // Sync Admin form placeholders
+      const admDeadlineTitle = document.getElementById('admDeadlineTitle');
+      const admDeadlineDate = document.getElementById('admDeadlineDate');
+      const admDeadlineCountdown = document.getElementById('admDeadlineCountdown');
+      if (admDeadlineTitle) admDeadlineTitle.value = customDeadline.title;
+      if (admDeadlineDate) admDeadlineDate.value = customDeadline.date;
+      if (admDeadlineCountdown) admDeadlineCountdown.value = customDeadline.countdown;
+    }
+
+    window.renderLibraryTable = function() {
+      const domain = document.getElementById('filterDomain').value;
+      const status = document.getElementById('filterStatus').value;
+      const allDocs = getAllDocuments();
+      const filtered = allDocs.filter(d =>
+        (domain === 'ALL' || d.domain === domain) &&
+        (status === 'ALL' || d.status === status)
+      );
+
+      document.getElementById('libraryTableBody').innerHTML = filtered.map(d => `
+        <tr class="hover:bg-slate-50/90 transition">
+          <td class="py-3 px-3 font-bold text-[#1D4ED8] whitespace-nowrap">
+            ${d.code}
+            ${d.isCustom ? '<span class="ml-1 text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-bold">Mới</span>' : ''}
+          </td>
+          <td class="py-3 px-3 font-medium text-slate-800">${d.title}</td>
+          <td class="py-3 px-3 whitespace-nowrap"><span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${d.domainLabel}</span></td>
+          <td class="py-3 px-3 text-slate-500 whitespace-nowrap">${d.effective}</td>
+          <td class="py-3 px-3 whitespace-nowrap">
+            ${d.status === 'active'
+              ? '<span class="inline-flex items-center gap-1 text-xs font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full">● Đang hiệu lực</span>'
+              : '<span class="inline-flex items-center gap-1 text-xs font-medium bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full">Hết hiệu lực</span>'}
+          </td>
+          <td class="py-3 px-3 text-right whitespace-nowrap">
+            <button onclick="openDocModal('${d.code}')" class="text-xs font-semibold text-blue-600 hover:underline cursor-pointer">Chi tiết</button>
+          </td>
+        </tr>
+      `).join('');
+    };
+
+    window.renderPenaltiesList = function() {
+      const q = normalizeVi(document.getElementById('penaltySearchInput')?.value || '');
+      const filtered = PENALTIES_DATA.filter(p =>
+        normalizeVi(p.code).includes(q) || normalizeVi(p.title).includes(q) || normalizeVi(p.detail).includes(q)
+      );
+      document.getElementById('penaltiesGrid').innerHTML = filtered.map(p => `
+        <div class="border border-slate-200/90 rounded-xl p-4 bg-[#F8FAFC] hover:border-red-300 transition space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-extrabold text-[#C8102E] bg-red-50 px-2.5 py-0.5 rounded-md">${p.code}</span>
+            <span class="text-[11px] font-semibold text-slate-500">${p.fineRange}</span>
+          </div>
+          <h3 class="font-bold text-slate-800 text-[14px]">${p.title}</h3>
+          <p class="text-xs font-semibold text-blue-800 bg-blue-50/80 px-2.5 py-1.5 rounded-lg">${p.avgFine}</p>
+          <p class="text-xs text-slate-600 leading-relaxed">${p.detail}</p>
+        </div>
+      `).join('');
+    };
+
+    window.renderNewsFeed = function() {
+      const allNews = getAllNews();
+      document.getElementById('newsFeedList').innerHTML = allNews.map(n => `
+        <div class="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded">${n.tag}</span>
+              <span class="text-xs text-slate-400">${n.date}</span>
+              ${n.isCustom ? '<span class="text-[10px] font-bold bg-red-50 text-red-600 px-1.5 py-0.5 rounded">Mới cập nhật</span>' : ''}
+            </div>
+            <h3 class="font-bold text-slate-800 text-[14px]">${n.title}</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">${n.desc}</p>
+          </div>
+        </div>
+      `).join('');
+    };
+
+    // 5. LATE PAYMENT FEE CALCULATOR (0.03%/day)
+    window.calculateLateFee = function() {
+      const amount = parseFloat(document.getElementById('calcTaxAmount').value) || 0;
+      const dueStr = document.getElementById('calcDueDate').value;
+      const payStr = document.getElementById('calcPayDate').value;
+      if (!dueStr || !payStr) return;
+
+      const dueDate = new Date(dueStr);
+      const payDate = new Date(payStr);
+      const diffMs = payDate.getTime() - dueDate.getTime();
+      const rawDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const chargeableDays = Math.max(0, rawDays - 1);
+      const fee = Math.round(amount * 0.0003 * chargeableDays);
+
+      document.getElementById('calcDaysOut').textContent = `${chargeableDays} ngày`;
+      document.getElementById('calcFeeOut').textContent = `${fee.toLocaleString('vi-VN')} đ`;
+    };
+
+    // 6. RISK CHECKER
+    window.checkInvoiceRisk = function() {
+      const mst = document.getElementById('mstRiskInput').value.trim();
+      const box = document.getElementById('riskCheckResult');
+      if (!mst) {
+        box.innerHTML = `<span class="text-red-600 font-semibold">Vui lòng nhập mã số thuế cần kiểm tra.</span>`;
+        return;
+      }
+      if (mst.endsWith('888') || mst.endsWith('999')) {
+        box.innerHTML = `
+          <div class="flex items-start gap-3 text-red-700">
+            <span class="text-xl">⚠️</span>
+            <div>
+              <p class="font-bold text-[14px]">CẢNH BÁO RỦI RO CAO — MST: ${mst}</p>
+              <p class="text-xs mt-1 text-slate-700">Người nộp thuế có dấu hiệu ngừng hoạt động tại địa chỉ đã đăng ký hoặc thuộc danh sách rà soát hóa đơn rủi ro cao. Đề nghị đối chiếu hồ sơ chứng minh nguồn gốc hàng hóa trước khi khấu trừ/hoàn thuế.</p>
+            </div>
+          </div>`;
+      } else {
+        box.innerHTML = `
+          <div class="flex items-start gap-3 text-emerald-700">
+            <span class="text-xl">✅</span>
+            <div>
+              <p class="font-bold text-[14px]">NNT ĐANG HOẠT ĐỘNG BÌNH THƯỜNG — MST: ${mst}</p>
+              <p class="text-xs mt-1 text-slate-600">Chưa ghi nhận cảnh báo rủi ro hóa đơn trên hệ thống quản lý thuế tại thời điểm tra cứu.</p>
+            </div>
+          </div>`;
+      }
+    };
+
+    // 7. MODALS & FETCH NEWS
+    let currentModalDoc = null;
+    window.openDocModal = function(code) {
+      const d = getAllDocuments().find(item => item.code === code) || getAllDocuments()[0];
+      currentModalDoc = d;
+      document.getElementById('modalDocCode').textContent = d.code;
+      document.getElementById('modalDocTitle').textContent = d.title;
+      document.getElementById('modalDocIssuer').textContent = d.issuer;
+      document.getElementById('modalDocEffective').textContent = d.effective;
+      document.getElementById('modalDocSummary').textContent = d.summary;
+      const badge = document.getElementById('modalDocBadge');
+      badge.textContent = d.status === 'active' ? 'Đang có hiệu lực' : 'Văn bản đối chiếu / Hết hiệu lực';
+      badge.className = d.status === 'active'
+        ? 'text-[11px] font-bold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full'
+        : 'text-[11px] font-bold bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full';
+
+      const modal = document.getElementById('docDetailModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+
+    window.askAiAboutCurrentDoc = function() {
+      if (!currentModalDoc) return;
+      const prompt = `@AI Tóm tắt các điểm mới quan trọng và lưu ý áp dụng của văn bản ${currentModalDoc.code} (${currentModalDoc.title})?`;
+      closeDocModal();
+      navigateTo('chat');
+      sendQuickPromptToAI(prompt);
+    };
+
+    window.closeDocModal = function() {
+      const modal = document.getElementById('docDetailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    };
+
+    window.openGuideModal = function() {
+      const modal = document.getElementById('guideModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    };
+    window.closeGuideModal = function() {
+      const modal = document.getElementById('guideModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    };
+
+    window.scrollTimelineToToday = function() {
+      const track = document.getElementById('timelineTrack');
+      track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+      showToast('Đã chuyển tới mốc thời gian hôm nay (25/11/2026)');
+    };
+
+    window.selectTimelineMilestone = function(key) {
+      const labels = {
+        '2024-01': 'Mốc hiệu lực 01/01/2024',
+        '2025-01': 'Mốc hiệu lực 01/01/2025 (Luật 56/2024/QH15)',
+        '2025-07': 'Mốc hiệu lực 01/07/2025 (Luật Thuế GTGT 48/2024/QH15)',
+        '2025-10': 'Mốc hiệu lực 01/10/2025 (Luật Thuế TNDN 67/2025/QH15)',
+        '2026-11': 'Mốc hiệu lực 15/11/2026 (Nghị định 320/2025/NĐ-CP)'
+      };
+      showToast(labels[key] || 'Đã chọn mốc hiệu lực văn bản');
+    };
+
+    window.handleFetchLatestNews = function() {
+      const spinner = document.getElementById('fetchSpinner');
+      spinner.classList.add('animate-spin');
+      setTimeout(() => {
+        spinner.classList.remove('animate-spin');
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('lastUpdatedTime').textContent = `Cập nhật lúc ${hh}:${mm} · 25/11/2026`;
+        showToast('Đã đồng bộ dữ liệu văn bản & tin mới nhất từ hệ thống!');
+      }, 650);
+    };
+
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastMessage').textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3200);
+    }
+
+    // 8. ADMIN PORTAL LOGIC (LIVE CLOUD SYNC FOR ALL COLLEAGUES)
+    const LOCAL_ADMIN_PASS_KEY = 'udnt_admin_password_v1';
+    const LOCAL_ADMIN_DOCS_KEY = 'udnt_custom_docs_v1';
+    const LOCAL_ADMIN_NEWS_KEY = 'udnt_custom_news_v1';
+    const LOCAL_ADMIN_DEADLINE_KEY = 'udnt_custom_deadline_v1';
+
+    let isAdminLoggedIn = false;
+
+    function getAdminPassword() {
+      return localStorage.getItem(LOCAL_ADMIN_PASS_KEY) || 'nghi2026';
+    }
+
+    window.openAdminModal = function() {
+      const modal = document.getElementById('adminModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.getElementById('adminLoginError').classList.add('hidden');
+      if (isAdminLoggedIn) {
+        document.getElementById('adminLoginView').classList.add('hidden');
+        document.getElementById('adminDashboardView').classList.remove('hidden');
+        renderAdminLists();
+      } else {
+        document.getElementById('adminLoginView').classList.remove('hidden');
+        document.getElementById('adminDashboardView').classList.add('hidden');
+        document.getElementById('adminPasswordInput').value = '';
+        setTimeout(() => document.getElementById('adminPasswordInput').focus(), 100);
+      }
+    };
+
+    window.closeAdminModal = function() {
+      const modal = document.getElementById('adminModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    };
+
+    window.handleAdminLogin = function(e) {
+      e.preventDefault();
+      const entered = document.getElementById('adminPasswordInput').value.trim();
+      if (entered === getAdminPassword()) {
+        isAdminLoggedIn = true;
+        document.getElementById('adminLoginError').classList.add('hidden');
+        document.getElementById('adminLoginView').classList.add('hidden');
+        document.getElementById('adminDashboardView').classList.remove('hidden');
+        renderAdminLists();
+        showToast('Đăng nhập Quản trị viên thành công!');
+      } else {
+        document.getElementById('adminLoginError').classList.remove('hidden');
+      }
+    };
+
+    window.logoutAdmin = function() {
+      isAdminLoggedIn = false;
+      closeAdminModal();
+      showToast('Đã đăng xuất khỏi chế độ Quản trị');
+    };
+
+    window.switchAdminTab = function(tabName) {
+      document.querySelectorAll('.admin-tab-pane').forEach(p => p.classList.add('hidden'));
+      document.getElementById('adminTab-' + tabName)?.classList.remove('hidden');
+      document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        const active = btn.getAttribute('data-admintab') === tabName;
+        if (active) {
+          btn.className = 'admin-tab-btn px-3.5 py-2 text-xs font-bold rounded-t-xl bg-white text-blue-700 border border-b-0 border-slate-200 cursor-pointer';
+        } else {
+          btn.className = 'admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer';
+        }
+      });
+    };
+
+    function renderAdminLists() {
+      document.getElementById('customDocsCount').textContent = customDocs.length;
+      const docListEl = document.getElementById('adminCustomDocsList');
+      if (customDocs.length === 0) {
+        docListEl.innerHTML = `<p class="text-xs text-slate-400 italic">Chưa có văn bản bổ sung nào từ Quản trị.</p>`;
+      } else {
+        docListEl.innerHTML = customDocs.map((d, idx) => `
+          <div class="bg-white border border-slate-200 rounded-lg p-2.5 flex items-center justify-between gap-2">
+            <div>
+              <span class="font-bold text-blue-700">${d.code}</span> — <span class="font-medium text-slate-800">${d.title}</span>
+              <span class="text-[11px] text-slate-400 ml-1">(${d.effective})</span>
+            </div>
+            <button onclick="deleteCustomDoc('${d.id || idx}')" class="text-xs text-red-600 hover:bg-red-50 px-2 py-1 rounded font-semibold shrink-0 cursor-pointer">Xóa</button>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById('customNewsCount').textContent = customNews.length;
+      const newsListEl = document.getElementById('adminCustomNewsList');
+      if (customNews.length === 0) {
+        newsListEl.innerHTML = `<p class="text-xs text-slate-400 italic">Chưa có tin mới bổ sung nào từ Quản trị.</p>`;
+      } else {
+        newsListEl.innerHTML = customNews.map((n, idx) => `
+          <div class="bg-white border border-slate-200 rounded-lg p-2.5 flex items-center justify-between gap-2">
+            <div>
+              <span class="text-[11px] font-bold text-blue-700">[${n.tag}]</span> <span class="font-medium text-slate-800">${n.title}</span>
+              <span class="text-[11px] text-slate-400 ml-1">(${n.date})</span>
+            </div>
+            <button onclick="deleteCustomNews('${n.id || idx}')" class="text-xs text-red-600 hover:bg-red-50 px-2 py-1 rounded font-semibold shrink-0 cursor-pointer">Xóa</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    window.handleAdminAddDoc = async function(e) {
+      e.preventDefault();
+      const domainMap = {
+        'GTGT': 'Thuế GTGT',
+        'TNDN': 'Thuế TNDN',
+        'TNCN': 'Thuế TNCN & HKD',
+        'QLT': 'Quản lý thuế',
+        'XUPHAT': 'Xử phạt VPHC'
+      };
+      const domainVal = document.getElementById('admDocDomain').value;
+      const newDoc = {
+        code: document.getElementById('admDocCode').value.trim(),
+        domain: domainVal,
+        domainLabel: domainMap[domainVal] || domainVal,
+        effective: document.getElementById('admDocEffective').value.trim(),
+        title: document.getElementById('admDocTitle').value.trim(),
+        issuer: document.getElementById('admDocIssuer').value.trim() || 'Bộ Tài chính',
+        summary: document.getElementById('admDocSummary').value.trim(),
+        status: 'active',
+        isCustom: true,
+        createdAt: Date.now()
+      };
+
+      if (db && isFirebaseReady) {
+        try {
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tax_custom_docs'), newDoc);
+        } catch (err) {
+          saveCustomDocLocal(newDoc);
+        }
+      } else {
+        saveCustomDocLocal(newDoc);
+      }
+
+      e.target.reset();
+      document.getElementById('admDocIssuer').value = 'Bộ Tài chính';
+      showToast(`Đã lưu & đồng bộ văn bản ${newDoc.code} cho toàn bộ đồng nghiệp!`);
+    };
+
+    function saveCustomDocLocal(newDoc) {
+      newDoc.id = 'local_' + Date.now();
+      customDocs.unshift(newDoc);
+      localStorage.setItem(LOCAL_ADMIN_DOCS_KEY, JSON.stringify(customDocs));
+      refreshDashboardStats();
+      renderLibraryTable();
+      renderAdminLists();
+    }
+
+    window.deleteCustomDoc = async function(docId) {
+      if (db && isFirebaseReady && !String(docId).startsWith('local_')) {
+        try {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tax_custom_docs', docId));
+          showToast('Đã xóa văn bản khỏi hệ thống');
+          return;
+        } catch (err) {}
+      }
+      customDocs = customDocs.filter((d, i) => String(d.id || i) !== String(docId));
+      localStorage.setItem(LOCAL_ADMIN_DOCS_KEY, JSON.stringify(customDocs));
+      refreshDashboardStats();
+      renderLibraryTable();
+      renderAdminLists();
+      showToast('Đã xóa văn bản');
+    };
+
+    window.handleAdminAddNews = async function(e) {
+      e.preventDefault();
+      const now = new Date();
+      const dd = String(now.getDate()).padStart(2, '0');
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const yyyy = now.getFullYear();
+
+      const newNewsItem = {
+        date: `${dd}/${mm}/${yyyy}`,
+        tag: document.getElementById('admNewsTag').value,
+        title: document.getElementById('admNewsTitle').value.trim(),
+        desc: document.getElementById('admNewsDesc').value.trim(),
+        isCustom: true,
+        createdAt: Date.now()
+      };
+
+      if (db && isFirebaseReady) {
+        try {
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tax_custom_news'), newNewsItem);
+        } catch (err) {
+          saveCustomNewsLocal(newNewsItem);
+        }
+      } else {
+        saveCustomNewsLocal(newNewsItem);
+      }
+
+      e.target.reset();
+      showToast('Đã đăng tin mới & đồng bộ tức thì cho mọi người!');
+    };
+
+    function saveCustomNewsLocal(item) {
+      item.id = 'local_' + Date.now();
+      customNews.unshift(item);
+      localStorage.setItem(LOCAL_ADMIN_NEWS_KEY, JSON.stringify(customNews));
+      renderNewsFeed();
+      renderAdminLists();
+    }
+
+    window.deleteCustomNews = async function(newsId) {
+      if (db && isFirebaseReady && !String(newsId).startsWith('local_')) {
+        try {
+          await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tax_custom_news', newsId));
+          showToast('Đã xóa tin thông báo');
+          return;
+        } catch (err) {}
+      }
+      customNews = customNews.filter((n, i) => String(n.id || i) !== String(newsId));
+      localStorage.setItem(LOCAL_ADMIN_NEWS_KEY, JSON.stringify(customNews));
+      renderNewsFeed();
+      renderAdminLists();
+      showToast('Đã xóa tin thông báo');
+    };
+
+    window.handleAdminUpdateDeadline = async function(e) {
+      e.preventDefault();
+      const updated = {
+        title: document.getElementById('admDeadlineTitle').value.trim(),
+        date: document.getElementById('admDeadlineDate').value.trim(),
+        countdown: document.getElementById('admDeadlineCountdown').value.trim()
+      };
+
+      if (db && isFirebaseReady) {
+        try {
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'tax_settings', 'deadline'), updated);
+        } catch (err) {}
+      }
+      customDeadline = updated;
+      localStorage.setItem(LOCAL_ADMIN_DEADLINE_KEY, JSON.stringify(updated));
+      refreshDashboardStats();
+      showToast('Đã cập nhật lịch hạn nộp thuế trên trang chủ!');
+    };
+
+    window.handleAdminChangePassword = function(e) {
+      e.preventDefault();
+      const p1 = document.getElementById('admNewPass1').value.trim();
+      const p2 = document.getElementById('admNewPass2').value.trim();
+      if (p1.length < 4) {
+        showToast('Mật khẩu mới cần tối thiểu 4 ký tự');
+        return;
+      }
+      if (p1 !== p2) {
+        showToast('Hai lần nhập mật khẩu chưa khớp nhau!');
+        return;
+      }
+      localStorage.setItem(LOCAL_ADMIN_PASS_KEY, p1);
+      e.target.reset();
+      showToast('Đã đổi mật khẩu Quản trị thành công!');
+    };
+
+    // 9. REALTIME GROUP CHAT + AI ASSISTANT
+    const LOCAL_CHAT_KEY = 'udnt_group_chat_messages_v1';
+    const LOCAL_USER_KEY = 'udnt_official_profile_v1';
+    let chatMessages = [];
+    let chatTargetMode = 'group';
+    let isFloatingOpen = false;
+    let db = null;
+    let appId = typeof __app_id !== 'undefined' ? __app_id : 'ung-dung-nganh-thue-can-tho';
+    let isFirebaseReady = false;
+
+    const DEFAULT_WELCOME_MESSAGES = [
+      {
+        id: 'welcome-1',
+        sender: 'Nguyễn Thanh Nghị',
+        unit: 'Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ',
+        role: 'official',
+        text: 'Chào các anh chị em đồng nghiệp! Mọi người có thể trao đổi nghiệp vụ trực tiếp tại đây hoặc gõ @AI ở đầu câu để nhờ Trợ lý AI tra cứu nhanh văn bản thuế, mức phạt NĐ 125/310 nhé.',
+        timeStr: '07:15'
+      },
+      {
+        id: 'welcome-2',
+        sender: 'Trợ lý AI Ngành Thuế',
+        unit: 'Hỗ trợ pháp luật thuế 24/7',
+        role: 'ai',
+        text: 'Xin chào quý công chức Thuế cơ sở 5 thành phố Cần Thơ! Tôi sẵn sàng hỗ trợ tra cứu Luật Quản lý thuế, Luật Thuế GTGT 48/2024/QH15, Luật Thuế TNDN 67/2025/QH15, Thông tư 40/2021/TT-BTC và mức xử phạt theo Nghị định 125/2020/NĐ-CP & Nghị định 310. Mời anh/chị đặt câu hỏi bằng cách gõ @AI!',
+        timeStr: '07:15'
+      }
+    ];
+
+    function loadSavedIdentity() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(LOCAL_USER_KEY) || 'null');
+        if (saved && saved.name) {
+          document.getElementById('chatUserNameInput').value = saved.name;
+          document.getElementById('chatUserUnitInput').value = saved.unit || '';
+        }
+      } catch (e) {}
+    }
+
+    window.saveUserIdentity = function() {
+      const name = document.getElementById('chatUserNameInput').value.trim() || 'Công chức Thuế';
+      const unit = document.getElementById('chatUserUnitInput').value.trim() || 'Thuế cơ sở 5 TP Cần Thơ';
+      try {
+        localStorage.setItem(LOCAL_USER_KEY, JSON.stringify({ name, unit }));
+      } catch (e) {}
+    };
+
+    window.applyPresetOfficial = function(val) {
+      if (val === 'CUSTOM') {
+        document.getElementById('chatUserNameInput').value = '';
+        document.getElementById('chatUserUnitInput').value = '';
+        document.getElementById('chatUserNameInput').focus();
+        return;
+      }
+      const [name, unit] = val.split('|');
+      document.getElementById('chatUserNameInput').value = name || '';
+      document.getElementById('chatUserUnitInput').value = unit || '';
+      saveUserIdentity();
+      showToast(`Đã chọn tài khoản: ${name}`);
+    };
+
+    window.setChatTargetMode = function(mode) {
+      chatTargetMode = mode;
+      const gBtn = document.getElementById('modeGroupBtn');
+      const aBtn = document.getElementById('modeAiBtn');
+      const input = document.getElementById('mainChatInput');
+      if (mode === 'ai') {
+        aBtn.className = 'text-[11.5px] font-bold px-3 py-1 rounded-full bg-amber-500 text-white transition cursor-pointer';
+        gBtn.className = 'text-[11.5px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition cursor-pointer';
+        input.placeholder = 'Đặt câu hỏi nghiệp vụ cho Trợ lý AI Ngành Thuế...';
+        if (!input.value.startsWith('@AI')) input.value = '@AI ' + input.value;
+      } else {
+        gBtn.className = 'text-[11.5px] font-bold px-3 py-1 rounded-full bg-blue-600 text-white transition cursor-pointer';
+        aBtn.className = 'text-[11.5px] font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-amber-100 hover:text-amber-800 transition cursor-pointer';
+        input.placeholder = 'Nhập nội dung trao đổi với đồng nghiệp hoặc gõ @AI để hỏi trợ lý thuế...';
+        input.value = input.value.replace(/^@AI\s*/i, '');
+      }
+      input.focus();
+    };
+
+    window.insertAtAiPrefix = function(inputId) {
+      const el = document.getElementById(inputId);
+      if (!el.value.trim().toUpperCase().startsWith('@AI')) {
+        el.value = '@AI ' + el.value;
+      }
+      el.focus();
+    };
+
+    window.toggleFloatingChat = function(open) {
+      isFloatingOpen = open;
+      const box = document.getElementById('floatingChatBox');
+      const btn = document.getElementById('floatingChatToggleBtn');
+      const badge = document.getElementById('floatingUnreadBadge');
+      if (open) {
+        box.classList.remove('hidden');
+        btn.classList.add('hidden');
+        badge.classList.add('hidden');
+        scrollChatToBottom('mini');
+      } else {
+        box.classList.add('hidden');
+        btn.classList.remove('hidden');
+      }
+    };
+
+    function formatChatHtml(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/(@AI)/gi, '<span class="font-extrabold text-amber-600 bg-amber-50 px-1 rounded">$1</span>')
+        .replace(/\n/g, '<br/>');
+    }
+
+    function renderChatMessages() {
+      const currentName = (document.getElementById('chatUserNameInput').value || '').trim();
+      const html = chatMessages.map(m => {
+        const isAi = m.role === 'ai';
+        const isMe = !isAi && m.sender === currentName;
+
+        if (isAi) {
+          return `
+            <div class="flex items-start gap-2.5 max-w-[92%]">
+              <div class="w-7 h-7 rounded-lg bg-amber-400 text-[#1A365D] flex items-center justify-center font-extrabold text-[11px] shrink-0 mt-0.5 shadow-sm">AI</div>
+              <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200/90 rounded-2xl rounded-tl-sm px-3.5 py-2.5 shadow-sm">
+                <div class="flex items-center justify-between gap-3 mb-1">
+                  <span class="text-[11.5px] font-extrabold text-amber-800">Trợ lý AI Ngành Thuế</span>
+                  <span class="text-[10px] text-slate-400">${m.timeStr || ''}</span>
+                </div>
+                <div class="text-[13px] text-slate-800 leading-relaxed">${formatChatHtml(m.text)}</div>
+              </div>
+            </div>
+          `;
+        }
+
+        if (isMe) {
+          return `
+            <div class="flex flex-col items-end">
+              <div class="max-w-[85%] bg-[#1D4ED8] text-white rounded-2xl rounded-tr-sm px-3.5 py-2.5 shadow-sm">
+                <div class="text-[13px] leading-relaxed">${formatChatHtml(m.text)}</div>
+              </div>
+              <span class="text-[10px] text-slate-400 mt-1 px-1">${m.sender} · ${m.timeStr || ''}</span>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="flex items-start gap-2.5 max-w-[88%]">
+            <div class="w-7 h-7 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">
+              ${(m.sender || 'CB').slice(0, 2).toUpperCase()}
+            </div>
+            <div class="bg-white border border-slate-200/90 rounded-2xl rounded-tl-sm px-3.5 py-2.5 shadow-sm">
+              <div class="flex flex-wrap items-baseline gap-2 mb-0.5">
+                <span class="text-[12px] font-bold text-[#1A365D]">${m.sender}</span>
+                <span class="text-[10px] text-slate-400">${m.unit || ''} · ${m.timeStr || ''}</span>
+              </div>
+              <div class="text-[13px] text-slate-700 leading-relaxed">${formatChatHtml(m.text)}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const mainBox = document.getElementById('mainChatMessages');
+      const miniBox = document.getElementById('miniChatMessages');
+      if (mainBox) mainBox.innerHTML = html;
+      if (miniBox) miniBox.innerHTML = html;
+      scrollChatToBottom('main');
+      scrollChatToBottom('mini');
+    }
+
+    function scrollChatToBottom(target) {
+      const el = document.getElementById(target === 'main' ? 'mainChatMessages' : 'miniChatMessages');
+      if (el) el.scrollTop = el.scrollHeight;
+    }
+
+    async function persistChatMessage(msgObj) {
+      if (db && isFirebaseReady) {
+        try {
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'tax_group_chat'), {
+            ...msgObj,
+            createdAt: serverTimestamp()
+          });
+          return;
+        } catch (e) {
+          console.warn('Fallback to local storage chat:', e);
+        }
+      }
+      chatMessages.push({ ...msgObj, id: 'local-' + Date.now() + Math.random() });
+      try {
+        localStorage.setItem(LOCAL_CHAT_KEY, JSON.stringify(chatMessages.slice(-80)));
+      } catch (e) {}
+      renderChatMessages();
+    }
+
+    window.handleSendMessage = async function(e, source) {
+      e.preventDefault();
+      const inputEl = document.getElementById(source === 'main' ? 'mainChatInput' : 'miniChatInput');
+      let text = inputEl.value.trim();
+      if (!text) return;
+
+      if (source === 'main' && chatTargetMode === 'ai' && !text.toUpperCase().startsWith('@AI')) {
+        text = '@AI ' + text;
+      }
+
+      inputEl.value = '';
+      const sender = document.getElementById('chatUserNameInput').value.trim() || 'Công chức Thuế';
+      const unit = document.getElementById('chatUserUnitInput').value.trim() || 'Thuế cơ sở 5 TP Cần Thơ';
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      await persistChatMessage({ sender, unit, role: 'official', text, timeStr });
+
+      if (text.toUpperCase().includes('@AI')) {
+        const cleanQuestion = text.replace(/@AI/gi, '').trim() || 'Xin chào Trợ lý AI Ngành Thuế';
+        await generateTaxAiReply(cleanQuestion);
+      }
+    };
+
+    window.sendQuickPromptToAI = async function(promptText) {
+      const inputEl = document.getElementById('mainChatInput');
+      inputEl.value = promptText;
+      await handleSendMessage({ preventDefault: () => {} }, 'main');
+    };
+
+    async function generateTaxAiReply(question) {
+      const mainTyping = document.getElementById('aiTypingBar');
+      const miniTyping = document.getElementById('miniAiTyping');
+      mainTyping?.classList.remove('hidden');
+      miniTyping?.classList.remove('hidden');
+
+      const apiKey = typeof __gemini_api_key !== 'undefined' ? __gemini_api_key : "";
+      let replyText = '';
+
+      try {
+        if (apiKey) {
+          const systemPrompt = `Bạn là Trợ lý AI Chuyên gia Pháp luật Thuế Việt Nam phục vụ nội bộ công chức Thuế cơ sở 5 thành phố Cần Thơ. Hãy trả lời ngắn gọn, chính xác, trích dẫn đúng số hiệu văn bản (Luật Quản lý thuế 38/2019/QH14, Luật Thuế GTGT 48/2024/QH15, Nghị định 181/2025/NĐ-CP, Luật Thuế TNDN 67/2025/QH15, Nghị định 320/2025/NĐ-CP, Nghị định 125/2020/NĐ-CP & Nghị định 310, Thông tư 40/2021/TT-BTC). Dùng gạch đầu dòng rõ ràng, dễ đọc trong khung chat.`;
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: `${systemPrompt}\n\nCâu hỏi của công chức: ${question}` }] }]
+            })
+          });
+          const data = await res.json();
+          replyText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        }
+      } catch (err) {
+        console.warn('AI API fallback:', err);
+      }
+
+      if (!replyText) {
+        replyText = getOfflineTaxAiAnswer(question);
+      }
+
+      mainTyping?.classList.add('hidden');
+      miniTyping?.classList.add('hidden');
+
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      await persistChatMessage({
+        sender: 'Trợ lý AI Ngành Thuế',
+        unit: 'Hỗ trợ pháp luật thuế 24/7',
+        role: 'ai',
+        text: replyText,
+        timeStr
+      });
+    }
+
+    function getOfflineTaxAiAnswer(q) {
+      const norm = normalizeVi(q);
+      if (norm.includes('35 ngay') || norm.includes('cham nop ho so') || norm.includes('to khai')) {
+        return `Căn cứ **Điều 13 Nghị định 125/2020/NĐ-CP** (sửa đổi bởi Nghị định 310):\n• Hành vi chậm nộp hồ sơ khai thuế **từ 31 đến 60 ngày** bị phạt tiền từ **5.000.000đ đến 8.000.000đ** đối với tổ chức (mức trung bình **6.500.000đ**).\n• Đối với **cá nhân, hộ kinh doanh**, mức phạt bằng 1/2 tổ chức: từ **2.500.000đ đến 4.000.000đ** (mức trung bình **3.250.000đ**).\n• Lưu ý: Nếu chậm nộp kèm theo số thuế thiếu thì phải nộp đủ tiền thuế và tiền chậm nộp **0,03%/ngày**.`;
+      }
+      if (norm.includes('nguong') || norm.includes('200 trieu') || norm.includes('ho kinh doanh')) {
+        return `Căn cứ **Luật Thuế GTGT số 48/2024/QH15** và **Thông tư 40/2021/TT-BTC**:\n• Từ ngày **01/01/2026**, hộ kinh doanh, cá nhân kinh doanh có doanh thu từ **200 triệu đồng/năm trở xuống** thuộc đối tượng không chịu thuế GTGT và không phải nộp thuế TNCN.\n• Trường hợp doanh thu trên 200 triệu đồng/năm, áp dụng tỷ lệ thuế theo ngành nghề (Phân phối hàng hóa: **1% GTGT + 0,5% TNCN**; Dịch vụ không bao thầu NVL: **5% GTGT + 2% TNCN**; Sản xuất, vận tải: **3% GTGT + 1,5% TNCN**).`;
+      }
+      if (norm.includes('0,03') || norm.includes('0.03') || norm.includes('tien cham nop')) {
+        return `Căn cứ **Điều 59 Luật Quản lý thuế số 38/2019/QH14**:\n• Mức tính tiền chậm nộp bằng **0,03%/ngày** tính trên số tiền thuế chậm nộp.\n• Thời gian tính tiền chậm nộp được tính liên tục kể từ ngày tiếp theo ngày hết hạn nộp thuế đến ngày liền kề trước ngày số tiền thuế nợ được nộp vào ngân sách nhà nước (trừ 1 ngày nộp tiền).`;
+      }
+      if (norm.includes('hoa don') || norm.includes('125') || norm.includes('310')) {
+        return `Căn cứ **Nghị định 125/2020/NĐ-CP** và **Nghị định 310**:\n• Lập hóa đơn không đúng thời điểm nhưng không dẫn đến chậm thực hiện nghĩa vụ thuế và có tình tiết giảm nhẹ: **Phạt cảnh cáo**.\n• Lập hóa đơn không đúng thời điểm thông thường: phạt từ **3.000.000đ – 5.000.000đ** (tổ chức).\n• Không lập hóa đơn khi bán hàng hóa, cung cấp dịch vụ cho người mua: phạt từ **10.000.000đ – 20.000.000đ** (tổ chức).`;
+      }
+      return `Đã tiếp nhận câu hỏi nghiệp vụ của công chức: **"${q}"**.\n• Anh/chị có thể tra cứu nhanh số hiệu văn bản liên quan tại mục **Thư viện văn bản** hoặc xem chi tiết khung phạt tại **Cẩm nang xử phạt (NĐ 125 & 310)**.\n• Để AI tra cứu chính xác điều khoản, anh/chị hãy nêu kèm số hiệu văn bản hoặc hành vi cụ thể (ví dụ: *chậm nộp tờ khai, hóa đơn sai thời điểm, ngưỡng thuế HKD*).`;
+    }
+
+    window.clearChatHistoryConfirm = function() {
+      chatMessages = [...DEFAULT_WELCOME_MESSAGES];
+      try { localStorage.setItem(LOCAL_CHAT_KEY, JSON.stringify(chatMessages)); } catch (e) {}
+      renderChatMessages();
+      showToast('Đã làm mới khung trò chuyện');
+    };
+
+    // Initialize Firebase Cloud Realtime Sync (Chat + Live Admin Updates)
+    async function initRealtimeCloudSync() {
+      // Load local fallbacks first
+      try {
+        const savedDocs = JSON.parse(localStorage.getItem(LOCAL_ADMIN_DOCS_KEY) || 'null');
+        if (Array.isArray(savedDocs)) customDocs = savedDocs;
+
+        const savedNews = JSON.parse(localStorage.getItem(LOCAL_ADMIN_NEWS_KEY) || 'null');
+        if (Array.isArray(savedNews)) customNews = savedNews;
+
+        const savedDeadline = JSON.parse(localStorage.getItem(LOCAL_ADMIN_DEADLINE_KEY) || 'null');
+        if (savedDeadline && savedDeadline.title) customDeadline = savedDeadline;
+
+        const localSavedChat = JSON.parse(localStorage.getItem(LOCAL_CHAT_KEY) || 'null');
+        chatMessages = (Array.isArray(localSavedChat) && localSavedChat.length > 0) ? localSavedChat : [...DEFAULT_WELCOME_MESSAGES];
+      } catch (e) {
+        chatMessages = [...DEFAULT_WELCOME_MESSAGES];
+      }
+
+      refreshDashboardStats();
+      renderLibraryTable();
+      renderNewsFeed();
+      renderChatMessages();
+
+      try {
+        if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+          const firebaseConfig = JSON.parse(__firebase_config);
+          const app = initializeApp(firebaseConfig);
+          const auth = getAuth(app);
+          db = getFirestore(app);
+
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } else {
+            await signInAnonymously(auth);
+          }
+
+          isFirebaseReady = true;
+          document.getElementById('syncStatusBadge').textContent = 'Đồng bộ trực tuyến';
+
+          // 1. Listen to Live Group Chat
+          const chatQuery = query(
+            collection(db, 'artifacts', appId, 'public', 'data', 'tax_group_chat'),
+            orderBy('createdAt', 'asc'),
+            limit(100)
+          );
+          onSnapshot(chatQuery, (snapshot) => {
+            if (!snapshot.empty) {
+              const cloudMsgs = [];
+              snapshot.forEach(docSnap => cloudMsgs.push({ id: docSnap.id, ...docSnap.data() }));
+              chatMessages = cloudMsgs;
+              renderChatMessages();
+              if (!isFloatingOpen && currentActiveView !== 'chat') {
+                document.getElementById('floatingUnreadBadge')?.classList.remove('hidden');
+              }
+            }
+          });
+
+          // 2. Listen to Live Admin Custom Documents
+          const docsQuery = query(
+            collection(db, 'artifacts', appId, 'public', 'data', 'tax_custom_docs'),
+            orderBy('createdAt', 'desc'),
+            limit(100)
+          );
+          onSnapshot(docsQuery, (snapshot) => {
+            const list = [];
+            snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+            customDocs = list;
+            refreshDashboardStats();
+            renderLibraryTable();
+            if (isAdminLoggedIn) renderAdminLists();
+          });
+
+          // 3. Listen to Live Admin Custom News
+          const newsQuery = query(
+            collection(db, 'artifacts', appId, 'public', 'data', 'tax_custom_news'),
+            orderBy('createdAt', 'desc'),
+            limit(50)
+          );
+          onSnapshot(newsQuery, (snapshot) => {
+            const list = [];
+            snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+            customNews = list;
+            renderNewsFeed();
+            if (isAdminLoggedIn) renderAdminLists();
+          });
+
+          // 4. Listen to Live Admin Deadline Setting
+          onSnapshot(doc(db, 'artifacts', appId, 'public', 'data', 'tax_settings', 'deadline'), (docSnap) => {
+            if (docSnap.exists()) {
+              customDeadline = docSnap.data();
+              refreshDashboardStats();
+            }
+          });
+        }
+      } catch (err) {
+        console.warn('Cloud sync offline mode:', err);
+        document.getElementById('syncStatusBadge').textContent = 'Lưu cục bộ';
+      }
+    }
+
+    // 10. INITIALIZE APP
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedBridge = localStorage.getItem('udnt_bridge_photo');
+      if (savedBridge) applyCustomBridgePhoto(savedBridge);
+
+      loadSavedIdentity();
+      renderPenaltiesList();
+      calculateLateFee();
+      handleHashChange();
+      initRealtimeCloudSync();
+    });
+  </script>
+</body>
+</html>
