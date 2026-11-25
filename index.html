@@ -1107,14 +1107,15 @@
 
             <div class="lg:col-span-4 space-y-4">
               <div class="bg-white border border-slate-200/80 rounded-2xl p-4 shadow-sm">
-                <div class="flex items-center justify-between mb-2.5">
-                  <h3 class="text-[14px] font-bold text-slate-800 flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse-dot"></span>
-                    Thông tin công chức tham gia
-                  </h3>
-                  <span id="syncStatusBadge" class="text-[10.5px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full">Firebase Live</span>
-                </div>
-                <div class="space-y-2.5 text-[13px]">
+            <div class="flex items-center justify-between mb-2.5">
+              <h3 class="text-[14px] font-bold text-slate-800 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse-dot"></span>
+                Thông tin công chức tham gia
+              </h3>
+              <button type="button" onclick="testFirebaseConnectionNow()" id="syncStatusBadge" title="Bấm để kiểm tra kết nối đồng bộ Firebase" class="text-[10.5px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full cursor-pointer hover:bg-emerald-100 transition">Firebase Live</button>
+            </div>
+            <p id="firebaseSyncHint" class="text-[11px] text-slate-500 mb-2 leading-snug">Đang tự động đồng bộ tin nhắn qua <strong>vanbanthue-tcs5</strong>. Bấm nút trạng thái để kiểm tra mạng.</p>
+            <div class="space-y-2.5 text-[13px]">
                   <div>
                     <label class="block text-[11.5px] font-semibold text-slate-500 mb-1">Chọn nhanh hoặc nhập họ tên công chức</label>
                     <select id="presetOfficialSelect" onchange="applyPresetOfficial(this.value)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 font-medium focus:bg-white focus:border-blue-400 focus:outline-none mb-2">
@@ -1395,6 +1396,9 @@
             <button onclick="switchAdminTab('audit')" data-admintab="audit" class="admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer">
               🛡️ Nhật ký trao đổi (Mật)
             </button>
+            <button onclick="switchAdminTab('chat_roster')" data-admintab="chat_roster" class="admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer">
+              👥 Danh sách &amp; Quyền chat
+            </button>
             <button onclick="switchAdminTab('firebase')" data-admintab="firebase" class="admin-tab-btn px-3.5 py-2 text-xs font-semibold rounded-t-xl text-slate-600 hover:text-slate-900 cursor-pointer">
               ☁️ Đồng bộ Firebase
             </button>
@@ -1652,49 +1656,49 @@
             <div id="adminAuditLogsList" class="space-y-2.5 max-h-[360px] overflow-y-auto pr-1 custom-scroll"></div>
           </div>
 
-          <div id="adminTab-password" class="admin-tab-pane hidden space-y-4">
-            <form onsubmit="handleAdminChangePassword(event)" class="bg-slate-50 border border-slate-200/80 rounded-xl p-4 space-y-3 max-w-md">
-              <h4 class="font-bold text-slate-800 text-[14px]">Đổi mật khẩu Quản trị viên</h4>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Mật khẩu mới *</label>
-                <input id="admNewPass1" type="password" placeholder="Nhập mật khẩu mới..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+          <div id="adminTab-chat_roster" class="admin-tab-pane hidden space-y-4">
+            <div class="bg-blue-50/70 border border-blue-200 rounded-xl p-4 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div>
+                  <h4 class="font-bold text-slate-900 text-[14px]">Quản lý danh sách công chức &amp; quyền tham gia chat</h4>
+                  <p class="text-xs text-slate-600 mt-0.5">
+                    Mặc định bất kỳ ai mở trang web đều có thể nhắn tin. Tại đây ông chủ có thể thêm đồng nghiệp vào danh sách chọn nhanh hoặc bật mã khóa phòng chat nội bộ.
+                  </p>
+                </div>
               </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Xác nhận mật khẩu mới *</label>
-                <input id="admNewPass2" type="password" placeholder="Nhập lại mật khẩu mới..." required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg focus:border-blue-400 focus:outline-none" />
+
+              <div class="bg-white border border-slate-200 rounded-xl p-3 space-y-2.5">
+                <label class="flex items-center justify-between gap-3 cursor-pointer">
+                  <div>
+                    <p class="text-xs font-bold text-slate-800">Bật mã truy cập phòng chat nội bộ</p>
+                    <p class="text-[11px] text-slate-500">Nếu bật, đồng nghiệp cần nhập đúng mã phòng chat mới gửi được tin nhắn (tắt = ai mở link cũng chat được ngay).</p>
+                  </div>
+                  <input id="admChatRoomPinEnabled" type="checkbox" onchange="saveChatAccessSettings()" class="w-4 h-4 accent-[#1A365D] cursor-pointer" />
+                </label>
+                <div class="flex flex-wrap items-center gap-2 pt-1">
+                  <input id="admChatRoomPinInput" type="text" placeholder="Đặt mã phòng chat (vd: TCS5-2026)..." class="flex-1 min-w-[180px] px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold focus:bg-white focus:border-blue-400 focus:outline-none" />
+                  <button type="button" onclick="saveChatAccessSettings()" class="bg-[#1A365D] hover:bg-[#102A43] text-white text-xs font-bold px-3.5 py-1.5 rounded-lg cursor-pointer">
+                    Lưu quyền chat
+                  </button>
+                </div>
               </div>
-              <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2 rounded-xl shadow-sm transition cursor-pointer">
-                Lưu mật khẩu mới
-              </button>
-            </form>
+
+              <form onsubmit="handleAdminAddChatOfficial(event)" class="grid grid-cols-1 sm:grid-cols-12 gap-2 pt-1">
+                <input id="admOfficialName" type="text" placeholder="Họ tên đồng nghiệp (vd: Phạm Minh Tuấn)..." required class="sm:col-span-5 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs focus:border-blue-400 focus:outline-none" />
+                <input id="admOfficialUnit" type="text" value="Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ" placeholder="Tổ / Đơn vị..." required class="sm:col-span-5 px-3 py-2 bg-white border border-slate-200 rounded-lg text-xs focus:border-blue-400 focus:outline-none" />
+                <button type="submit" class="sm:col-span-2 bg-[#1D4ED8] hover:bg-blue-700 text-white font-bold text-xs px-3 py-2 rounded-lg cursor-pointer">
+                  + Thêm
+                </button>
+              </form>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-700 text-xs uppercase tracking-wider mb-2">Danh sách công chức trong mục chọn nhanh (<span id="adminOfficialsCount">0</span>)</h4>
+              <div id="adminOfficialsList" class="space-y-2 max-h-[220px] overflow-y-auto pr-1 custom-scroll"></div>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- TOAST NOTIFICATION -->
-  <div id="toastNotification" class="fixed bottom-16 right-5 z-50 hidden bg-slate-900 text-white text-[13px] font-medium px-4 py-2.5 rounded-xl shadow-lg items-center gap-2">
-    <span class="text-emerald-400">✓</span>
-    <span id="toastMessage">Đã cập nhật dữ liệu mới nhất!</span>
-  </div>
-
-  <script>
-    const TAX_DOMAINS_CONFIG = [
-      { id: 'ALL', label: 'Tất cả lĩnh vực' },
-      { id: 'KETOAN', label: 'Kế toán & chế độ kế toán' },
-      { id: 'QLT', label: 'Quản lý thuế' },
-      { id: 'HOADON', label: 'Hóa đơn, chứng từ' },
-      { id: 'GTGT', label: 'Thuế GTGT' },
-      { id: 'TNDN', label: 'Thuế TNDN' },
-      { id: 'TNCN', label: 'Thuế TNCN' },
-      { id: 'HKD', label: 'Hộ, cá nhân kinh doanh' },
-      { id: 'GDLK', label: 'Giao dịch liên kết' },
-      { id: 'GIAMGIAHAN', label: 'Giảm, gia hạn thuế 2026' },
-      { id: 'XUPHAT', label: 'Xử phạt vi phạm' },
-      { id: 'PHILEPHI', label: 'Phí, lệ phí, thuế khác' },
-      { id: 'DOANHNGHIEP', label: 'Doanh nghiệp' }
-    ];
+          <div id="adminTab-firebase" class="admin-tab-pane hidden space-y-4">
 
     const BASE_DOCUMENTS = [
       { code: '108/2025/QH15', docType: 'Luật', title: 'Luật Quản lý thuế năm 2025 (Hiệu lực từ 01/07/2026)', domains: ['QLT', 'HKD', 'HOADON'], domainLabel: 'Quản lý thuế', issuer: 'Quốc hội', issuedYear: 2025, effective: '01/07/2026', status: 'active', summary: 'Thay thế Luật Quản lý thuế 2019 từ 01/07/2026; quy định mới về khai thuế, tính thuế, sử dụng hóa đơn điện tử của hộ kinh doanh, cá nhân kinh doanh (Điều 13, Điều 26), quản lý rủi ro và tuân thủ thuế.' },
@@ -1909,24 +1913,23 @@
         }
       });
 
-      if (updateHash && VIEW_TO_HASH[viewId]) {
-        try {
-          window.history.replaceState(null, '', VIEW_TO_HASH[viewId]);
-        } catch (e) {}
-      }
-
       if (viewId === 'library') {
-        if (filterParam) document.getElementById('filterStatus').value = filterParam;
-        renderLibraryTable();
+        if (filterParam) {
+          setLibStatusTab(filterParam);
+        } else {
+          renderLibraryTable();
+        }
       } else if (viewId === 'files') {
         renderSharedFilesList();
-      } else if (viewId === 'penalties') {
-        renderPenaltiesList();
-      } else if (viewId === 'news') {
-        renderNewsFeed();
       } else if (viewId === 'chat') {
         markIncomingMessagesAsSeen();
-        scrollChatToBottom('main');
+        renderChatMessages();
+      }
+
+      if (updateHash && VIEW_TO_HASH[viewId] && window.location.hash !== VIEW_TO_HASH[viewId]) {
+        try {
+          window.location.hash = VIEW_TO_HASH[viewId];
+        } catch (err) {}
       }
 
       toggleMobileSidebar(false);
@@ -1934,23 +1937,206 @@
 
     function handleHashChange() {
       const rawHash = (window.location.hash || '').replace(/^#\/?/, '').split('?')[0].toLowerCase();
-      const mappedView = ROUTE_MAP[rawHash] || 'overview';
-      if (!window.location.hash) {
-        try { window.history.replaceState(null, '', '#/home'); } catch (e) {}
-      }
-      navigateTo(mappedView, null, false);
+      const mapped = ROUTE_MAP[rawHash] || 'overview';
+      navigateTo(mapped, null, false);
     }
-    window.addEventListener('hashchange', handleHashChange);
 
     function toggleMobileSidebar(show) {
-      const sidebar = document.getElementById('leftSidebar');
-      const backdrop = document.getElementById('sidebarBackdrop');
+      const sb = document.getElementById('leftSidebar');
+      const bd = document.getElementById('sidebarBackdrop');
+      if (!sb || !bd) return;
       if (show) {
-        sidebar.classList.remove('-translate-x-full');
-        backdrop.classList.remove('hidden');
+        sb.classList.remove('-translate-x-full');
+        bd.classList.remove('hidden');
       } else {
-        sidebar.classList.add('-translate-x-full');
-        backdrop.classList.add('hidden');
+        sb.classList.add('-translate-x-full');
+        bd.classList.add('hidden');
+      }
+    }
+
+    let isFloatingOpen = false;
+    function toggleFloatingChat(open) {
+      isFloatingOpen = Boolean(open);
+      const btn = document.getElementById('floatingChatToggleBtn');
+      const box = document.getElementById('floatingChatBox');
+      const badge = document.getElementById('floatingUnreadBadge');
+      if (isFloatingOpen) {
+        if (btn) btn.classList.add('hidden');
+        if (box) box.classList.remove('hidden');
+        if (badge) {
+          badge.textContent = '0';
+          badge.classList.add('hidden');
+        }
+        markIncomingMessagesAsSeen();
+        renderChatMessages();
+      } else {
+        if (box) box.classList.add('hidden');
+        if (btn) btn.classList.remove('hidden');
+      }
+    }
+
+    const LOCAL_USER_ID_KEY = 'udnt_chat_user_id_v1';
+    const LOCAL_CHAT_KEY = 'udnt_internal_chat_v1';
+    const DEFAULT_WELCOME_MESSAGES = [
+      {
+        id: 'welcome-1',
+        sender: 'Nguyễn Thanh Nghị',
+        unit: 'Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ',
+        recipient: 'Phòng trao đổi chung',
+        text: 'Chào các đồng nghiệp Thuế cơ sở 5 TP Cần Thơ! Kênh này dùng để trao đổi nhanh vướng mắc nghiệp vụ thuế, biểu mẫu, hóa đơn điện tử và cập nhật văn bản mới.',
+        seenBy: [],
+        timeStr: '08:30',
+        fullDateTime: '08:30:00 · 25/11/2026'
+      }
+    ];
+    let chatMessages = [...DEFAULT_WELCOME_MESSAGES];
+
+    function applyPresetOfficial(val) {
+      if (!val || val === 'CUSTOM') return;
+      const parts = val.split('|');
+      const nameInp = document.getElementById('chatUserNameInput');
+      const unitInp = document.getElementById('chatUserUnitInput');
+      if (nameInp && parts[0]) nameInp.value = parts[0];
+      if (unitInp && parts[1]) unitInp.value = parts[1];
+      saveUserIdentity();
+      renderChatMessages();
+    }
+
+    function saveUserIdentity() {
+      const name = (document.getElementById('chatUserNameInput')?.value || '').trim();
+      const unit = (document.getElementById('chatUserUnitInput')?.value || '').trim();
+      try {
+        localStorage.setItem(LOCAL_USER_ID_KEY, JSON.stringify({ name, unit }));
+      } catch (e) {}
+      renderChatMessages();
+    }
+
+    function loadSavedIdentity() {
+      try {
+        const raw = localStorage.getItem(LOCAL_USER_ID_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        const nameInp = document.getElementById('chatUserNameInput');
+        const unitInp = document.getElementById('chatUserUnitInput');
+        if (parsed.name && nameInp) nameInp.value = parsed.name;
+        if (parsed.unit && unitInp) unitInp.value = parsed.unit;
+
+        const sel = document.getElementById('presetOfficialSelect');
+        if (sel && parsed.name) {
+          const matchOpt = Array.from(sel.options).find(o => o.value.startsWith(parsed.name + '|'));
+          sel.value = matchOpt ? matchOpt.value : 'CUSTOM';
+        }
+      } catch (e) {}
+    }
+
+    function handleSaveFirebaseConfig(e) {
+      e.preventDefault();
+      const rawUrl = (document.getElementById('admFirebaseUrlInput')?.value || '').trim();
+      if (!rawUrl) {
+        showToast('Vui lòng nhập đường link Firebase Realtime Database URL!');
+        return;
+      }
+      firebaseDbUrl = rawUrl.replace(/\/+$/, '');
+      localStorage.setItem(LOCAL_FIREBASE_URL_KEY, firebaseDbUrl);
+      startFirebasePolling();
+      pushCollectionToFirebase('chat_messages', chatMessages);
+      pushCollectionToFirebase('custom_docs', customDocs);
+      pushCollectionToFirebase('custom_news', customNews);
+      pushCollectionToFirebase('custom_deadline', customDeadline);
+      pushCollectionToFirebase('shared_files', sharedFiles);
+      pushCollectionToFirebase('admin_audit_logs', adminAuditLogs);
+      showToast('Đã lưu và đồng bộ dữ liệu lên Firebase!');
+    }
+
+    function disconnectFirebase() {
+      firebaseDbUrl = '';
+      localStorage.setItem(LOCAL_FIREBASE_URL_KEY, 'DISABLED');
+      if (firebaseSyncTimer) {
+        clearInterval(firebaseSyncTimer);
+        firebaseSyncTimer = null;
+      }
+      if (firebaseEventSource) {
+        firebaseEventSource.close();
+        firebaseEventSource = null;
+      }
+      updateSyncIndicators(false);
+      showToast('Đã ngắt kết nối Firebase, chuyển sang lưu cục bộ');
+    }
+
+    function startFirebasePolling() {
+      if (!firebaseDbUrl) return;
+      if (firebaseSyncTimer) clearInterval(firebaseSyncTimer);
+      if (firebaseEventSource) {
+        firebaseEventSource.close();
+        firebaseEventSource = null;
+      }
+
+      const cleanBase = firebaseDbUrl.replace(/\/+$/, '');
+      pullAllFromFirebase();
+
+      try {
+        if (typeof EventSource !== 'undefined') {
+          const es = new EventSource(`${cleanBase}/vanbanthue.json`);
+          es.addEventListener('put', () => {
+            pullAllFromFirebase();
+          });
+          es.addEventListener('patch', () => {
+            pullAllFromFirebase();
+          });
+          es.onerror = () => {
+            pullAllFromFirebase();
+          };
+          firebaseEventSource = es;
+        }
+      } catch (e) {}
+
+      firebaseSyncTimer = setInterval(pullAllFromFirebase, 1500);
+    }
+
+    function updateSyncIndicators(connected, detailMsg = '') {
+      const badge1 = document.getElementById('syncStatusBadge');
+      const badge2 = document.getElementById('adminFirebaseBadge');
+      const hintEl = document.getElementById('firebaseSyncHint');
+      if (badge1) {
+        badge1.textContent = connected ? 'Firebase Live' : 'Chưa đồng bộ';
+        badge1.className = connected
+          ? 'text-[10.5px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full cursor-pointer hover:bg-emerald-200 transition'
+          : 'text-[10.5px] font-bold bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full cursor-pointer hover:bg-amber-200 transition';
+      }
+      if (badge2) {
+        badge2.textContent = connected ? 'Đã kết nối Firebase' : 'Chưa kết nối';
+        badge2.className = connected
+          ? 'text-[11px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full'
+          : 'text-[11px] font-bold bg-slate-200 text-slate-700 px-2.5 py-0.5 rounded-full';
+      }
+      if (hintEl && detailMsg) {
+        hintEl.innerHTML = detailMsg;
+      }
+    }
+
+    async function testFirebaseConnectionNow() {
+      if (!firebaseDbUrl) {
+        updateSyncIndicators(false, '<span class="text-amber-700 font-semibold">Chưa cấu hình URL Firebase.</span>');
+        showToast('Chưa cấu hình URL Firebase Realtime Database!');
+        return;
+      }
+      try {
+        const cleanBase = firebaseDbUrl.replace(/\/+$/, '');
+        const res = await fetch(`${cleanBase}/vanbanthue/chat_messages.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) {
+          updateSyncIndicators(false, `<span class="text-red-600 font-semibold">Firebase từ chối quyền đọc/ghi (${res.status}). Hãy kiểm tra tab Rules trên Firebase (đặt true và bấm Publish).</span>`);
+          showToast(`Lỗi quyền Firebase (${res.status}) — kiểm tra Rules & bấm Publish!`);
+          return;
+        }
+        const data = await res.json();
+        updateSyncIndicators(true, `<span class="text-emerald-700 font-semibold">Kết nối tốt! Đang đồng bộ trực tiếp qua vanbanthue-tcs5.</span>`);
+        if (Array.isArray(data) && data.length > 0) {
+          applyFirebaseRootData({ chat_messages: data });
+        }
+        showToast('Kết nối Firebase Realtime Database hoạt động tốt!');
+      } catch (err) {
+        updateSyncIndicators(false, `<span class="text-red-600 font-semibold">Không kết nối được tới Firebase (có thể do mạng cơ quan chặn hoặc mất mạng).</span>`);
+        showToast('Không kết nối được tới máy chủ Firebase!');
       }
     }
 
@@ -2687,6 +2873,17 @@
     const LOCAL_SHARED_FILES_KEY = 'udnt_shared_files_v1';
     const LOCAL_FIREBASE_URL_KEY = 'udnt_firebase_db_url_v1';
     const LOCAL_AUDIT_LOGS_KEY = 'udnt_admin_audit_logs_v1';
+    const LOCAL_CHAT_OFFICIALS_KEY = 'udnt_chat_officials_v1';
+    const LOCAL_CHAT_ACCESS_KEY = 'udnt_chat_access_v1';
+    const DEFAULT_CHAT_OFFICIALS = [
+      { name: 'Nguyễn Thanh Nghị', unit: 'Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ' },
+      { name: 'Nguyễn Thị Vân Anh', unit: 'Công chức Thuế cơ sở 5 TP Cần Thơ' },
+      { name: 'Trần Thị Thu Hiền', unit: 'Công chức Thuế cơ sở 5 TP Cần Thơ' },
+      { name: 'Lê Thị Anh Thuy', unit: 'Công chức Thuế cơ sở 5 TP Cần Thơ' }
+    ];
+    let chatOfficials = [...DEFAULT_CHAT_OFFICIALS];
+    let chatAccessConfig = { pinEnabled: false, pinCode: '' };
+    let verifiedRoomPinSession = '';
     let isAdminLoggedIn = false;
     let firebaseDbUrl = DEFAULT_FIREBASE_DB_URL;
     let firebaseSyncTimer = null;
@@ -2757,7 +2954,88 @@
         if (urlInp) urlInp.value = firebaseDbUrl || '';
       } else if (tabName === 'audit') {
         renderAdminAuditLogs();
+      } else if (tabName === 'chat_roster') {
+        renderAdminChatRoster();
       }
+    }
+
+    function populateOfficialDropdown() {
+      const sel = document.getElementById('presetOfficialSelect');
+      if (!sel) return;
+      const currentName = (document.getElementById('chatUserNameInput')?.value || '').trim();
+      const opts = chatOfficials.map(o => {
+        const val = `${o.name}|${o.unit}`;
+        return `<option value="${escapeHtml(val)}">${escapeHtml(o.name)} (${escapeHtml(o.unit.split('-')[0].trim())})</option>`;
+      });
+      opts.push(`<option value="CUSTOM">-- Tự nhập tên &amp; đơn vị khác --</option>`);
+      sel.innerHTML = opts.join('');
+      if (currentName) {
+        const matched = Array.from(sel.options).find(opt => opt.value.startsWith(currentName + '|'));
+        sel.value = matched ? matched.value : 'CUSTOM';
+      }
+    }
+
+    function renderAdminChatRoster() {
+      if (!isAdminLoggedIn) return;
+      const pinChk = document.getElementById('admChatRoomPinEnabled');
+      const pinInp = document.getElementById('admChatRoomPinInput');
+      if (pinChk) pinChk.checked = Boolean(chatAccessConfig.pinEnabled);
+      if (pinInp) pinInp.value = chatAccessConfig.pinCode || '';
+
+      const cntEl = document.getElementById('adminOfficialsCount');
+      const listEl = document.getElementById('adminOfficialsList');
+      if (cntEl) cntEl.textContent = chatOfficials.length;
+      if (listEl) {
+        listEl.innerHTML = chatOfficials.map((o, idx) => `
+          <div class="bg-white border border-slate-200 rounded-lg px-3 py-2 flex items-center justify-between gap-2 text-xs">
+            <div>
+              <strong class="text-slate-800">${escapeHtml(o.name)}</strong>
+              <span class="text-slate-500 ml-1.5">— ${escapeHtml(o.unit)}</span>
+            </div>
+            <button type="button" onclick="deleteChatOfficial(${idx})" class="text-red-600 hover:bg-red-50 px-2 py-1 rounded font-semibold cursor-pointer">Xóa</button>
+          </div>
+        `).join('');
+      }
+    }
+
+    function handleAdminAddChatOfficial(e) {
+      e.preventDefault();
+      if (!isAdminLoggedIn) return;
+      const name = document.getElementById('admOfficialName').value.trim();
+      const unit = document.getElementById('admOfficialUnit').value.trim() || 'Thuế cơ sở 5 TP Cần Thơ';
+      if (!name) return;
+      chatOfficials.push({ name, unit });
+      try { localStorage.setItem(LOCAL_CHAT_OFFICIALS_KEY, JSON.stringify(chatOfficials)); } catch (err) {}
+      pushCollectionToFirebase('chat_officials', chatOfficials);
+      document.getElementById('admOfficialName').value = '';
+      populateOfficialDropdown();
+      renderAdminChatRoster();
+      showToast(`Đã thêm "${name}" vào danh sách chat!`);
+    }
+
+    function deleteChatOfficial(idx) {
+      if (!isAdminLoggedIn) return;
+      chatOfficials.splice(idx, 1);
+      try { localStorage.setItem(LOCAL_CHAT_OFFICIALS_KEY, JSON.stringify(chatOfficials)); } catch (err) {}
+      pushCollectionToFirebase('chat_officials', chatOfficials);
+      populateOfficialDropdown();
+      renderAdminChatRoster();
+      showToast('Đã xóa tên khỏi danh sách chọn nhanh');
+    }
+
+    function saveChatAccessSettings() {
+      if (!isAdminLoggedIn) return;
+      const enabled = Boolean(document.getElementById('admChatRoomPinEnabled')?.checked);
+      const pinCode = (document.getElementById('admChatRoomPinInput')?.value || '').trim();
+      if (enabled && !pinCode) {
+        showToast('Vui lòng nhập mã phòng chat trước khi bật khóa mã!');
+        return;
+      }
+      chatAccessConfig = { pinEnabled: enabled, pinCode };
+      try { localStorage.setItem(LOCAL_CHAT_ACCESS_KEY, JSON.stringify(chatAccessConfig)); } catch (err) {}
+      pushCollectionToFirebase('chat_access', chatAccessConfig);
+      showToast(enabled ? `Đã bật mã phòng chat nội bộ (${pinCode})` : 'Đã mở phòng chat tự do cho mọi người mở link');
+    }
     }
 
     let pendingLocalFileData = null;
@@ -3195,6 +3473,17 @@
         try { localStorage.setItem(LOCAL_AUDIT_LOGS_KEY, JSON.stringify(adminAuditLogs)); } catch (e) {}
         if (isAdminLoggedIn) renderAdminAuditLogs();
       }
+      if (Array.isArray(data.chat_officials) && data.chat_officials.length > 0) {
+        chatOfficials = data.chat_officials;
+        try { localStorage.setItem(LOCAL_CHAT_OFFICIALS_KEY, JSON.stringify(chatOfficials)); } catch (e) {}
+        populateOfficialDropdown();
+        if (isAdminLoggedIn) renderAdminChatRoster();
+      }
+      if (data.chat_access && typeof data.chat_access.pinEnabled === 'boolean') {
+        chatAccessConfig = data.chat_access;
+        try { localStorage.setItem(LOCAL_CHAT_ACCESS_KEY, JSON.stringify(chatAccessConfig)); } catch (e) {}
+        if (isAdminLoggedIn) renderAdminChatRoster();
+      }
       if (data.custom_deadline && data.custom_deadline.title) {
         customDeadline = data.custom_deadline;
         localStorage.setItem(LOCAL_ADMIN_DEADLINE_KEY, JSON.stringify(customDeadline));
@@ -3219,170 +3508,15 @@
       try {
         const cleanBase = firebaseDbUrl.replace(/\/+$/, '');
         const res = await fetch(`${cleanBase}/vanbanthue.json?t=${Date.now()}`, { cache: 'no-store' });
-        if (!res.ok) return;
-        const data = await res.json();
-        updateSyncIndicators(true);
-        applyFirebaseRootData(data);
-      } catch (err) {}
-    }
-
-    function startFirebaseStream() {
-      if (firebaseEventSource) {
-        try { firebaseEventSource.close(); } catch (e) {}
-        firebaseEventSource = null;
-      }
-      if (!firebaseDbUrl || typeof EventSource === 'undefined') return;
-      try {
-        const cleanBase = firebaseDbUrl.replace(/\/+$/, '');
-        const es = new EventSource(`${cleanBase}/vanbanthue.json`);
-        firebaseEventSource = es;
-        es.addEventListener('put', function(evt) {
-          updateSyncIndicators(true);
-          try {
-            const payload = JSON.parse(evt.data || '{}');
-            if (payload.path === '/' && payload.data) {
-              applyFirebaseRootData(payload.data);
-            } else if (payload.path === '/chat_messages' && Array.isArray(payload.data)) {
-              applyFirebaseRootData({ chat_messages: payload.data });
-            } else {
-              pullAllFromFirebase();
-            }
-          } catch (e) {}
-        });
-        es.addEventListener('patch', function() {
-          updateSyncIndicators(true);
-          pullAllFromFirebase();
-        });
-        es.onerror = function() {};
-      } catch (err) {}
-    }
-
-    function startFirebasePolling() {
-      if (firebaseSyncTimer) clearInterval(firebaseSyncTimer);
-      if (firebaseEventSource) {
-        try { firebaseEventSource.close(); } catch (e) {}
-        firebaseEventSource = null;
-      }
-      if (!firebaseDbUrl) {
-        updateSyncIndicators(false);
-        return;
-      }
-      pullAllFromFirebase();
-      startFirebaseStream();
-      firebaseSyncTimer = setInterval(pullAllFromFirebase, 1500);
-    }
-
-    async function handleSaveFirebaseConfig(e) {
-      e.preventDefault();
-      const rawUrl = document.getElementById('admFirebaseUrlInput').value.trim().replace(/\/+$/, '');
-      if (!rawUrl || !rawUrl.startsWith('https://')) {
-        showToast('Đường link Firebase phải bắt đầu bằng https://');
-        return;
-      }
-      firebaseDbUrl = rawUrl;
-      localStorage.setItem(LOCAL_FIREBASE_URL_KEY, firebaseDbUrl);
-      await pushCollectionToFirebase('shared_files', sharedFiles);
-      await pushCollectionToFirebase('custom_docs', customDocs);
-      await pushCollectionToFirebase('custom_news', customNews);
-      await pushCollectionToFirebase('chat_messages', chatMessages);
-      startFirebasePolling();
-      showToast('Đã kết nối & đồng bộ dữ liệu lên Firebase!');
-    }
-
-    function disconnectFirebase() {
-      firebaseDbUrl = '';
-      localStorage.setItem(LOCAL_FIREBASE_URL_KEY, 'DISABLED');
-      if (firebaseSyncTimer) clearInterval(firebaseSyncTimer);
-      if (firebaseEventSource) {
-        try { firebaseEventSource.close(); } catch (e) {}
-        firebaseEventSource = null;
-      }
-      updateSyncIndicators(false);
-      const inp = document.getElementById('admFirebaseUrlInput');
-      if (inp) inp.value = '';
-      showToast('Đã ngắt kết nối Firebase, chuyển sang lưu cục bộ.');
-    }
-
-    function handleAdminChangePassword(e) {
-      e.preventDefault();
-      const p1 = document.getElementById('admNewPass1').value.trim();
-      const p2 = document.getElementById('admNewPass2').value.trim();
-      if (p1.length < 4) {
-        showToast('Mật khẩu mới cần tối thiểu 4 ký tự');
-        return;
-      }
-      if (p1 !== p2) {
-        showToast('Hai lần nhập mật khẩu chưa khớp nhau!');
-        return;
-      }
-      localStorage.setItem(LOCAL_ADMIN_PASS_KEY, p1);
-      e.target.reset();
-      showToast('Đã đổi mật khẩu Quản trị thành công!');
-    }
-
-    const LOCAL_CHAT_KEY = 'udnt_internal_chat_v1';
-    const LOCAL_USER_KEY = 'udnt_official_profile_v1';
-    let chatMessages = [];
-    let isFloatingOpen = false;
-
-    const DEFAULT_WELCOME_MESSAGES = [
-      {
-        id: 'msg-1',
-        sender: 'Nguyễn Thanh Nghị',
-        unit: 'Tổ QL, hỗ trợ CN, HKD - Thuế CS 5 TP Cần Thơ',
-        text: 'Chào anh chị em đồng nghiệp! Mời mọi người trao đổi trực tiếp các vướng mắc nghiệp vụ khai, nộp thuế và hóa đơn điện tử của cá nhân, hộ kinh doanh tại đây.',
-        timeStr: '07:15'
-      }
-    ];
-
-    function loadSavedIdentity() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(LOCAL_USER_KEY) || 'null');
-        if (saved && saved.name) {
-          document.getElementById('chatUserNameInput').value = saved.name;
-          document.getElementById('chatUserUnitInput').value = saved.unit || '';
+        if (!res.ok) {
+          updateSyncIndicators(false, `<span class="text-red-600 font-semibold">Lỗi quyền Firebase (${res.status}). Vào Firebase → Rules → đặt .read/.write = true rồi bấm Publish.</span>`);
+          return;
         }
-      } catch (e) {}
-    }
-
-    function saveUserIdentity() {
-      const name = document.getElementById('chatUserNameInput').value.trim() || 'Công chức Thuế';
-      const unit = document.getElementById('chatUserUnitInput').value.trim() || 'Thuế cơ sở 5 TP Cần Thơ';
-      try {
-        localStorage.setItem(LOCAL_USER_KEY, JSON.stringify({ name, unit }));
-      } catch (e) {}
-      renderChatMessages();
-    }
-
-    function applyPresetOfficial(val) {
-      if (val === 'CUSTOM') {
-        document.getElementById('chatUserNameInput').value = '';
-        document.getElementById('chatUserUnitInput').value = '';
-        document.getElementById('chatUserNameInput').focus();
-        renderChatMessages();
-        return;
-      }
-      const [name, unit] = val.split('|');
-      document.getElementById('chatUserNameInput').value = name || '';
-      document.getElementById('chatUserUnitInput').value = unit || '';
-      saveUserIdentity();
-      showToast(`Đã chọn tài khoản: ${name}`);
-    }
-
-    function toggleFloatingChat(open) {
-      isFloatingOpen = open;
-      const box = document.getElementById('floatingChatBox');
-      const btn = document.getElementById('floatingChatToggleBtn');
-      const badge = document.getElementById('floatingUnreadBadge');
-      if (open) {
-        box.classList.remove('hidden');
-        btn.classList.add('hidden');
-        badge.classList.add('hidden');
-        markIncomingMessagesAsSeen();
-        scrollChatToBottom('mini');
-      } else {
-        box.classList.add('hidden');
-        btn.classList.remove('hidden');
+        const data = await res.json();
+        updateSyncIndicators(true, `<span class="text-emerald-700 font-semibold">Đang đồng bộ trực tiếp qua vanbanthue-tcs5.</span>`);
+        applyFirebaseRootData(data);
+      } catch (err) {
+        updateSyncIndicators(false, `<span class="text-amber-700 font-semibold">Đang thử kết nối lại Firebase...</span>`);
       }
     }
 
@@ -3543,6 +3677,16 @@
 
     function handleSendMessage(e, source) {
       e.preventDefault();
+      if (chatAccessConfig.pinEnabled && chatAccessConfig.pinCode) {
+        if (verifiedRoomPinSession !== chatAccessConfig.pinCode) {
+          const enteredPin = window.prompt('Phòng chat nội bộ đang bật mã truy cập. Vui lòng nhập mã phòng chat:');
+          if ((enteredPin || '').trim() !== chatAccessConfig.pinCode) {
+            showToast('Mã phòng chat chưa đúng, không thể gửi tin nhắn!');
+            return;
+          }
+          verifiedRoomPinSession = chatAccessConfig.pinCode;
+        }
+      }
       const inputEl = document.getElementById(source === 'main' ? 'mainChatInput' : 'miniChatInput');
       const text = inputEl.value.trim();
       const attachment = pendingChatAttachments[source];
@@ -3637,12 +3781,20 @@
 
         const savedAudit = JSON.parse(localStorage.getItem(LOCAL_AUDIT_LOGS_KEY) || 'null');
         adminAuditLogs = Array.isArray(savedAudit) ? savedAudit : [...chatMessages];
+
+        const savedOfficials = JSON.parse(localStorage.getItem(LOCAL_CHAT_OFFICIALS_KEY) || 'null');
+        chatOfficials = (Array.isArray(savedOfficials) && savedOfficials.length > 0) ? savedOfficials : [...DEFAULT_CHAT_OFFICIALS];
+
+        const savedChatAccess = JSON.parse(localStorage.getItem(LOCAL_CHAT_ACCESS_KEY) || 'null');
+        if (savedChatAccess && typeof savedChatAccess.pinEnabled === 'boolean') chatAccessConfig = savedChatAccess;
       } catch (e) {
         sharedFiles = [...SAMPLE_SHARED_FILES];
         chatMessages = [...DEFAULT_WELCOME_MESSAGES];
         adminAuditLogs = [...chatMessages];
+        chatOfficials = [...DEFAULT_CHAT_OFFICIALS];
       }
 
+      populateOfficialDropdown();
       loadSavedIdentity();
       const nameInp = document.getElementById('chatUserNameInput');
       if (nameInp) nameInp.addEventListener('input', () => renderChatMessages());
